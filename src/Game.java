@@ -3,6 +3,7 @@ public class Game {
 	private static final int TIME_STEP = 30;
 	
 	public Game() {
+		renderer = new Renderer();
 	}
 	
 	public void run() {
@@ -37,6 +38,7 @@ public class Game {
 	 */
 	public static void main(String[] args) {
 		Game g = new Game();
+		g.run();
 		System.exit(0);
 	}
 }

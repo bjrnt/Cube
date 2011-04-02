@@ -28,17 +28,15 @@ class Canvas extends JPanel {
 	
 	private static final Color black = new Color(0,0,0);
 	private static final Color white = new Color(255,255,255);
-	private static final int defaultScreenWidth = 640;
-	private static final int defaultScreenHeight = 480;
+	private static final int defaultScreenWidth = 800;
+	private static final int defaultScreenHeight = 600;
 	
 	private double widthScaleFactor;
 	private double heightScaleFactor;
 	
 	public Canvas() {
 		super(true);
-		int screenWidth = 680;
-		int screenHeight = 480;
-		setPreferredSize(new Dimension(screenWidth, screenHeight));
+		setPreferredSize(new Dimension(defaultScreenWidth, defaultScreenHeight));
 		setOpaque(true);
 	}
 	
