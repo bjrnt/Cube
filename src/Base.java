@@ -1,7 +1,10 @@
+import java.util.Collection;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Renderable;
 import org.newdawn.slick.SlickException;
 
 public class Base extends BasicGame {
@@ -23,10 +26,9 @@ public class Base extends BasicGame {
 	
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		//Get objects to render from cube
-		//for each object: object.draw(object.x,object.y);
-		//Get object to render from game (things that are not directly on the cube, for example score)
-		//for each object: object.draw(object.x,object.y);
+		Collection<Renderable> objects = null; //Temporary until Cube has a getSomething method
+		for(Renderable object : objects) {
+		}
 	}
 
 	@Override

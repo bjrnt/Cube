@@ -1,0 +1,90 @@
+[1mdiff --cc src/Vector3D.java[m
+[1mindex 3acb64e,3c408ac..0000000[m
+[1m--- a/src/Vector3D.java[m
+[1m+++ b/src/Vector3D.java[m
+[36m@@@ -52,17 -34,25 +47,18 @@@[m [mpublic final class Vector3D [m
+  		nullCheck(w);[m
+  		return new Vector3D(v.x-w.x, v.y-w.y, v.z-w.z);[m
+  	}[m
+[31m -	public float getX(){[m
+[31m -		return x;[m
+[31m -	}[m
+[31m -	public float getY(){[m
+[31m -		return y;[m
+[31m -	}[m
+[31m -	public float getZ(){[m
+[31m -		return z;[m
+[31m -	}[m
+[31m -	public void setX(float x) {[m
+[31m -		this.x = x;[m
+[31m -	}[m
+[31m -	public void setY(float y) {[m
+[31m -		this.y = y;[m
+[31m -	}[m
+[31m -	public void setZ(float z) {[m
+[31m -		this.z = z;[m
+[32m +	/**[m
+[32m +	 * Calculates the dot product of the two vectors[m
+[32m +	 * @param v first vector[m
+[32m +	 * @param w second vector[m
+[32m +	 * @return A scalar representing the dot product[m
+[32m +	 */[m
+[32m +	public static float dotProduct(Vector3D v,Vector3D w){[m
+[32m +		nullCheck(v);[m
+[32m +		nullCheck(w);[m
+[32m +		return v.x*w.x+v.y*w.y+v.z*w.z;[m
+  	}[m
+[31m -	[m
+[32m++[m
+  	/**[m
+  	 * Checks and throws exceptions if input is null;[m
+  	 */[m
+[1mdiff --git a/.classpath b/.classpath[m
+[1mindex e9ee43f..10ff6d2 100644[m
+[1m--- a/.classpath[m
+[1m+++ b/.classpath[m
+[36m@@ -2,6 +2,13 @@[m
+ <classpath>[m
+ 	<classpathentry kind="src" path="src"/>[m
+ 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>[m
+[32m+[m	[32m<classpathentry kind="lib" path="lib/jogg-0.0.7.jar"/>[m
+[32m+[m	[32m<classpathentry kind="lib" path="lib/jorbis-0.0.15.jar"/>[m
+[32m+[m	[32m<classpathentry kind="lib" path="lib/lwjgl.jar">[m
+[32m+[m		[32m<attributes>[m
+[32m+[m			[32m<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Cube/lib"/>[m
+[32m+[m		[32m</attributes>[m
+[32m+[m	[32m</classpathentry>[m
+ 	<classpathentry kind="lib" path="lib/slick.jar"/>[m
+ 	<classpathentry kind="output" path="bin"/>[m
+ </classpath>[m
+[1mdiff --git a/bin/Base.class b/bin/Base.class[m
+[1mindex 7155699..4395353 100644[m
+Binary files a/bin/Base.class and b/bin/Base.class differ
+[1mdiff --git a/bin/Cube$Side.class b/bin/Cube$Side.class[m
+[1mindex 6b27559..ade9cd4 100644[m
+Binary files a/bin/Cube$Side.class and b/bin/Cube$Side.class differ
+[1mdiff --git a/bin/Cube.class b/bin/Cube.class[m
+[1mindex feb73ee..99974eb 100644[m
+Binary files a/bin/Cube.class and b/bin/Cube.class differ
+[1mdiff --git a/bin/Vector3D.class b/bin/Vector3D.class[m
+[1mindex f48d6ae..defc52e 100644[m
+Binary files a/bin/Vector3D.class and b/bin/Vector3D.class differ
+[1mdiff --git a/lib/OpenAL32.dll b/lib/OpenAL32.dll[m
+[1mindex 5303006..22eb15f 100644[m
+Binary files a/lib/OpenAL32.dll and b/lib/OpenAL32.dll differ
+[1mdiff --git a/lib/jinput-dx8.dll b/lib/jinput-dx8.dll[m
+[1mindex 6d27ad5..0ad824b 100644[m
+Binary files a/lib/jinput-dx8.dll and b/lib/jinput-dx8.dll differ
+[1mdiff --git a/lib/jinput-raw.dll b/lib/jinput-raw.dll[m
+[1mindex ce1d162..2a014f6 100644[m
+Binary files a/lib/jinput-raw.dll and b/lib/jinput-raw.dll differ
+[1mdiff --git a/lib/lwjgl.dll b/lib/lwjgl.dll[m
+[1mindex 9db85e5..280e89a 100644[m
+Binary files a/lib/lwjgl.dll and b/lib/lwjgl.dll differ
+[1mdiff --git a/lib/lwjgl.jar b/lib/lwjgl.jar[m
+[1mindex 0f56815..10602a4 100644[m
+Binary files a/lib/lwjgl.jar and b/lib/lwjgl.jar differ
+[1mdiff --git a/lib/lwjgl64.dll b/lib/lwjgl64.dll[m
+[1mdeleted file mode 100644[m
+[1mindex f901064..0000000[m
+Binary files a/lib/lwjgl64.dll and /dev/null differ

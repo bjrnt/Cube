@@ -5,13 +5,8 @@
  *
  */
 public final class Vector3D {
-	float x,y,z;
-	/**
-	 * Initializes the three-dimensional vector
-	 * @param x The x-component of the vector
-	 * @param y The y-component of the vector
-	 * @param z The z-component of the vector
-	 */
+	private float x,y,z;
+	
 	public Vector3D(float x,float y,float z){
 		this.x=x;
 		this.y=y;
@@ -63,6 +58,7 @@ public final class Vector3D {
 		nullCheck(w);
 		return v.x*w.x+v.y*w.y+v.z*w.z;
 	}
+
 	/**
 	 * Checks and throws exceptions if input is null;
 	 */
