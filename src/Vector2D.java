@@ -1,32 +1,21 @@
 /**
- * Representing a methematical vector in threespace
- * THIS IS AN IMMUTABLE CLASS
+ * Represents a vector in euclidean 2-space
  * @author Johan
  *
  */
-public final class Vector3D {
-	float x,y,z;
-	/**
-	 * Initializes the three-dimensional vector
-	 * @param x The x-component of the vector
-	 * @param y The y-component of the vector
-	 * @param z The z-component of the vector
-	 */
-	public Vector3D(float x,float y,float z){
+public final class Vector2D {
+	private float x,y;
+	public Vector2D(float x,float y){
 		this.x=x;
 		this.y=y;
-		this.z=z;
 	}
-	
+
 	
 	public float getX(){
 		return x;
 	}
 	public float getY(){
 		return y;
-	}
-	public float getZ(){
-		return z;
 	}
 	
 	//STATIC METHODS
@@ -36,10 +25,10 @@ public final class Vector3D {
 	 * @param w second vector
 	 * @return The resulting vector
 	 */
-	public static Vector3D add(Vector3D v,Vector3D w){
+	public static Vector2D add(Vector2D v,Vector2D w){
 		nullCheck(v);
 		nullCheck(w);
-		return new Vector3D(v.x+w.x, v.y+w.y, v.z+w.z);
+		return new Vector2D(v.x+w.x, v.y+w.y);
 	}
 	/**
 	 * Substracts w from v that is v-w
@@ -47,10 +36,10 @@ public final class Vector3D {
 	 * @param w second vector
 	 * @return the resulting vector
 	 */
-	public static Vector3D subtract(Vector3D v,Vector3D w){
+	public static Vector2D subtract(Vector2D v,Vector2D w){
 		nullCheck(v);
 		nullCheck(w);
-		return new Vector3D(v.x-w.x, v.y-w.y, v.z-w.z);
+		return new Vector2D(v.x-w.x, v.y-w.y);
 	}
 	/**
 	 * Calculates the dot product of the two vectors
@@ -58,10 +47,10 @@ public final class Vector3D {
 	 * @param w second vector
 	 * @return A scalar representing the dot product
 	 */
-	public static float dotProduct(Vector3D v,Vector3D w){
+	public static float dotProduct(Vector2D v,Vector2D w){
 		nullCheck(v);
 		nullCheck(w);
-		return v.x*w.x+v.y*w.y+v.z*w.z;
+		return v.x*w.x+v.y*w.y;
 	}
 	/**
 	 * Checks and throws exceptions if input is null;
@@ -71,4 +60,5 @@ public final class Vector3D {
 			throw new NullPointerException();
 		}
 	}
+	
 }
