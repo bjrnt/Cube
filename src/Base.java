@@ -28,14 +28,13 @@ public class Base extends BasicGame {
 		camera = new Camera(new Vector3D(500,0,0), 0,0,0);
 		translator = new Translator(camera);
 		vl = new ArrayList<Vector3D>();
-		vl.add(new Vector3D(100,-50,50));
-		vl.add(new Vector3D(100,50,50));
-		vl.add(new Vector3D(100,-50,-50));
-		vl.add(new Vector3D(100,50,-50));
-		vl.add(new Vector3D(50,50,50));
-		vl.add(new Vector3D(50,50,-50));
-		vl.add(new Vector3D(0,200,0));
-		vl.add(new Vector3D(700,700,200));
+		vl.add(new Vector3D(0,0,0));
+		vl.add(new Vector3D(150,0,0));
+		vl.add(new Vector3D(0,0,0));
+		vl.add(new Vector3D(0,150,0));
+		vl.add(new Vector3D(0,0,0));
+		vl.add(new Vector3D(0,0,150));
+
 		//Game game = new Game(); For when the Game class exists
 	}
 	
@@ -47,6 +46,7 @@ public class Base extends BasicGame {
 			Vector2D trns2 = translator.translateTo2D(vl.get(i+1));
 			g.drawLine(400+trns.getX(), 300-trns.getY(), 400+trns2.getX(), 300-trns2.getY());
 		}
+		camera.rotationY += Math.PI/1000;
 	}
 
 	@Override

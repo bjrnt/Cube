@@ -4,7 +4,7 @@
  * @author Bjorn Tegelund
  */
 public class Camera extends GameObject {
-	private double rotationX, rotationY, rotationZ;
+	public double rotationX, rotationY, rotationZ;
 	
 	/**
 	 * Creates a new Camera which is used to see objects in 3D space within the game.
