@@ -5,7 +5,8 @@
  *
  */
 public final class Vector3D {
-	float x,y,z;
+	private float x,y,z;
+	
 	public Vector3D(float x,float y,float z){
 		this.x=x;
 		this.y=y;
@@ -42,8 +43,15 @@ public final class Vector3D {
 	public float getZ(){
 		return z;
 	}
-	
-	
+	public void setX(float x) {
+		this.x = x;
+	}
+	public void setY(float y) {
+		this.y = y;
+	}
+	public void setZ(float z) {
+		this.z = z;
+	}
 	
 	/**
 	 * Checks and throws exceptions if input is null;

@@ -4,7 +4,7 @@
  * @author Bjorn Tegelund
  */
 public class Camera extends GameObject {
-	private float rotationX, rotationY, rotationZ;
+	private double rotationX, rotationY, rotationZ;
 	
 	/**
 	 * Creates a new Camera which is used to see objects in 3D space within the game.
@@ -13,7 +13,7 @@ public class Camera extends GameObject {
 	 * @param rotY the Y-rotation of the camera.
 	 * @param rotZ the Z-rotation of the camera.
 	 */
-	public Camera(Vector3D pos, float rotX, float rotY, float rotZ) {
+	public Camera(Vector3D pos, double rotX, double rotY, double rotZ) {
 		super(pos);
 		rotationX = rotX;
 		rotationY = rotY;
@@ -23,19 +23,19 @@ public class Camera extends GameObject {
 	/**
 	 * @return the Camera's X-rotation.
 	 */
-	public float getRotX() {
+	public double getRotX() {
 		return rotationX;
 	}
 	/**
 	 * @return the Camera's Y-rotation.
 	 */
-	public float getRotY() {
+	public double getRotY() {
 		return rotationY;
 	}
 	/**
 	 * @return the Camera's Z-rotation.
 	 */
-	public float getRotZ() {
+	public double getRotZ() {
 		return rotationZ;
 	}
 }
