@@ -5,7 +5,10 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 public class Base extends BasicGame {
-
+	static private final int screenWidth = 800;
+	static private final int screenHeight = 600;
+	
+	
 	public Base() {
 		super("Cube3D");
 	}
@@ -30,16 +33,7 @@ public class Base extends BasicGame {
 	}
 	
 	public static void main(String[] args) throws SlickException {
-		System.out.println("java.library.path = " +
-		System.getProperty("java.library.path"));
-		System.out.println();
-		System.out.println("java.ext.dirs = " +
-		System.getProperty("java.ext.dirs"));
-		System.out.println();
-		System.out.println("java.class.path = " +
-		System.getProperty("java.class.path"));
-		System.out.println();
-		AppGameContainer container = new AppGameContainer(new Base(), 800,600,false);
+		AppGameContainer container = new AppGameContainer(new Base(), screenWidth, screenHeight,false);
 		container.start();
 	}
 }
