@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.newdawn.slick.AppGameContainer;
@@ -12,6 +14,9 @@ public class Base extends BasicGame {
 	static private final int screenHeight = 600;
 	
 	private Camera camera;
+	private Translator translator;
+	
+	private ArrayList<Vector3D> vl;
 	
 	public Base() {
 		super("Cube3D");
@@ -21,13 +26,26 @@ public class Base extends BasicGame {
 	public void init(GameContainer container) throws SlickException {
 		container.setVSync(true);
 		camera = new Camera(new Vector3D(500,0,0), 0,0,0);
+		translator = new Translator(camera);
+		vl = new ArrayList<Vector3D>();
+		vl.add(new Vector3D(100,-50,50));
+		vl.add(new Vector3D(100,50,50));
+		vl.add(new Vector3D(100,-50,-50));
+		vl.add(new Vector3D(100,50,-50));
+		vl.add(new Vector3D(50,50,50));
+		vl.add(new Vector3D(50,50,-50));
+		vl.add(new Vector3D(0,200,0));
+		vl.add(new Vector3D(700,700,200));
 		//Game game = new Game(); For when the Game class exists
 	}
 	
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		Collection<Renderable> objects = null; //Temporary until Cube has a getSomething method
-		for(Renderable object : objects) {
+		g.setColor(org.newdawn.slick.Color.red);
+		for(int i = 0; i < vl.size(); i+=2) {
+			Vector2D trns = translator.translateTo2D(vl.get(i));
+			Vector2D trns2 = translator.translateTo2D(vl.get(i+1));
+			g.drawLine(400+trns.getX(), 300-trns.getY(), 400+trns2.getX(), 300-trns2.getY());
 		}
 	}
 
