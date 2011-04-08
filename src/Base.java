@@ -8,6 +8,7 @@ public class Base extends BasicGame {
 	static private final int screenWidth = 800;
 	static private final int screenHeight = 600;
 	
+	private Camera camera;
 	
 	public Base() {
 		super("Cube3D");
@@ -16,6 +17,7 @@ public class Base extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		container.setVSync(true);
+		camera = new Camera(new Vector3D(500,0,0), 0,0,0);
 		//Game game = new Game(); For when the Game class exists
 	}
 	
