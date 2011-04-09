@@ -1,7 +1,4 @@
 import java.util.ArrayList;
-import org.newdawn.slick.Renderable;
-
-
 
 /**
  * The graphical interpretation of a Cube in three dimensions
@@ -9,7 +6,8 @@ import org.newdawn.slick.Renderable;
  *
  */
 public class Cube {
-	private static final float SIDEWIDTH_IN_PIXELS=200.0f;
+	//This is not measured in actual pixels!
+	private static final float SIDEWIDTH=200.0f;
 	private Side[] sides=new Side[]{new Side( new Vector3D(1, 0, 0), new Vector3D(0, 0, 1))};
 	private int squaresPerSide;
 	/**
@@ -30,18 +28,19 @@ public class Cube {
 	
 	/**
 	 * A representation of a side
-	 *    _____________________
-	 *   |                     |
-	 *   |                     |
-	 *   |                     |
-	 *   |                     |
-	 *   |  /|\     ________\  |
-	 *   |   |      _|  n   /  |
-	 *   |   |up               |
-	 *   |                     |
-	 *   |                     |
-	 *   |_____________________|
-	 *   
+	 * 
+	 * _____________________
+	 *|                     |
+	 *|                     |
+	 *|                     |
+	 *|                     |
+	 *|  /|\     ________\  |
+	 *|   |      _|  n   /  |
+	 *|   |up               |
+	 *|                     |
+	 *|                     |
+	 *|_____________________|
+	 * 
 	 * 
 	 */
 	private class Side{
@@ -51,7 +50,7 @@ public class Cube {
 		 * Initializes a side in the Cube
 		 * @param sideWidth
 		 * @param normal MUST HAVE THE FORMAT (0 or 1,0 or 1,0 or 1) and have length 1
-		 * @param upDirection MUST HAVE SAME FORMAT as normal
+		 * @param upDirection MUST HAVE SAME FORMAT AS NORMAL
 		 */
 		private Side(Vector3D normal, Vector3D upDirection){
 			checkVector(normal);
@@ -69,21 +68,21 @@ public class Cube {
 		public ArrayList<Vector3D[]> getGrid(){
 			ArrayList<Vector3D[]> lines=new ArrayList<Vector3D[]>();
 			//Calculates the position of one corner of the side
-			Vector3D startVector=Vector3D.add(Vector3D.scalarMultiplication(cross, SIDEWIDTH_IN_PIXELS/2),Vector3D.add(Vector3D.scalarMultiplication(n, SIDEWIDTH_IN_PIXELS/2),Vector3D.scalarMultiplication(up, SIDEWIDTH_IN_PIXELS/2)));
+			Vector3D startVector=Vector3D.add(Vector3D.scalarMultiplication(cross, SIDEWIDTH/2),Vector3D.add(Vector3D.scalarMultiplication(n, SIDEWIDTH/2),Vector3D.scalarMultiplication(up, SIDEWIDTH/2)));
 			//Calculates the opposite corner
-			Vector3D opposite=Vector3D.subtract(startVector,Vector3D.scalarMultiplication(cross, SIDEWIDTH_IN_PIXELS));
+			Vector3D opposite=Vector3D.subtract(startVector,Vector3D.scalarMultiplication(cross, SIDEWIDTH));
 			//Adding the top line
 			lines.add(new Vector3D[]{startVector,opposite});
 			//This vector represents the space between lines in the grid
-			Vector3D space=Vector3D.scalarMultiplication(up, SIDEWIDTH_IN_PIXELS/squaresPerSide);
+			Vector3D space=Vector3D.scalarMultiplication(up, SIDEWIDTH/squaresPerSide);
 			for (int i = 1; i <= squaresPerSide; i++) {
 				lines.add(new Vector3D[]{Vector3D.subtract(startVector, Vector3D.scalarMultiplication(space, i)),Vector3D.subtract(opposite, Vector3D.scalarMultiplication(space, i))});
 			}
 			//Starting on "vertical" lines
 			//startVector can be reused but space must change direction
-			space=Vector3D.scalarMultiplication(cross, SIDEWIDTH_IN_PIXELS/squaresPerSide);
+			space=Vector3D.scalarMultiplication(cross, SIDEWIDTH/squaresPerSide);
 			//Changing opposite to "vertical" alignment
-			opposite=Vector3D.subtract(startVector, Vector3D.scalarMultiplication(up, SIDEWIDTH_IN_PIXELS));
+			opposite=Vector3D.subtract(startVector, Vector3D.scalarMultiplication(up, SIDEWIDTH));
 			//Adding "side-line"
 			lines.add(new Vector3D[]{startVector,opposite});
 			for (int i = 1; i <=squaresPerSide ; i++) {

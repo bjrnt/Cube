@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -13,6 +14,8 @@ public class Base extends BasicGame {
 	private Camera camera;
 	private Translator translator;
 	
+	private Cube c;
+	
 	private ArrayList<Vector3D> vl;
 	
 	public Base() {
@@ -22,7 +25,7 @@ public class Base extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		container.setVSync(true);
-		camera = new Camera(new Vector3D(500,0,0));
+		camera = new Camera(new Vector3D(1000,0,0));
 		translator = new Translator(camera);
 		vl = new ArrayList<Vector3D>();
 		
@@ -62,6 +65,8 @@ public class Base extends BasicGame {
 		vl.add(new Vector3D(-50,-50,-50));
 		vl.add(new Vector3D(-50,-50,50));
 		//Game game = new Game(); For when the Game class exists
+		
+		c=new Cube(10);
 	}
 	
 	@Override
@@ -91,8 +96,21 @@ public class Base extends BasicGame {
 			trns2 = translator.translateTo2D(vl.get(i+1));
 			g.drawLine(400+trns.getX(), 300-trns.getY(), 400+trns2.getX(), 300-trns2.getY());
 		}
+		g.setColor(Color.green);
+		renderCube(g);
 	}
-
+	private void renderCube(Graphics g){
+		Vector2D trns,trns2;
+		ArrayList<Vector3D[]> cubeGrid=c.getGrid();
+		for (int i = 0; i < cubeGrid.size(); i++) {
+			trns = translator.translateTo2D(cubeGrid.get(i)[0]);
+			trns2 = translator.translateTo2D(cubeGrid.get(i)[1]);
+			g.drawLine(screenWidth/2+trns.getX(), screenHeight/2+trns.getY(), screenWidth/2+trns2.getX(), screenHeight/2+trns2.getY());
+			//System.out.println(cubeGrid.get(i)[0].getX()+"->"+trns.getX());
+		}
+	
+	}
+	
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		//game.update(delta); Update game logic
