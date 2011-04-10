@@ -17,6 +17,9 @@ public final class Vector2D {
 	public float getY(){
 		return y;
 	}
+	public String toString() {
+		return "("+x+","+y+")";
+	}
 	
 	//STATIC METHODS
 	/**

@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+import com.sun.corba.se.impl.orb.NormalDataCollector;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
 /**
  * The graphical interpretation of a Cube in three dimensions
  * @author Johan
@@ -7,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Cube {
 	//This is not measured in actual pixels!
-	private static final float SIDEWIDTH=1000.0f;
+	private static final float SIDEWIDTH=200.0f;
 	private Side[] sides=new Side[6];
 	private int squaresPerSide;
 	/**
@@ -16,17 +19,29 @@ public class Cube {
 	 * @param sideWidth The number of squares 
 	 */
 	public Cube(int squaresPerSide){
+		if (squaresPerSide<1) {
+			throw new IllegalArgumentException("The cube must have at least one field per side!");
+		}
 		this.squaresPerSide=squaresPerSide;
 	    sides[0]=new Side(new Vector3D(1, 0, 0), new Vector3D(0, 0, 1));
-	    
-	   
+	    sides[1]=new Side(new Vector3D(0, 1, 0), new Vector3D(0, 0, 1));
+	    sides[2]=new Side(new Vector3D(-1, 0, 0),new Vector3D(0, 0, 1));
+	    sides[3]=new Side(new Vector3D(0, -1, 0), new Vector3D(0, 0, 1));
+	    sides[4]=new Side(new Vector3D(0, 0, 1),new Vector3D(-1, 0, 0));
+	    sides[5]=new Side(new Vector3D(0, 0, -1), new Vector3D(1, 0, 0));
 	}
 	/**
 	 * Returns all renderable objects on the cube which are visible from the viewers perspective
 	 * @return An ArrayList of Renderables 
 	 */
-	public ArrayList<Vector3D[]> getGrid(){
-		return sides[0].getGrid();
+	public ArrayList<Vector3D[]> getGrid(MatrixTranslator mt){
+		ArrayList<Vector3D[]> lines=sides[0].getGrid();
+		for (int i = 1; i < sides.length; i++) {
+			if (mt.translate(sides[i].getNormal()).getX()>0) {
+				lines.addAll(sides[i].getGrid());
+			}
+		}
+		return  lines;
 	}
 	
 	/**
@@ -64,11 +79,14 @@ public class Cube {
 			up=upDirection;
 			cross=Vector3D.crossProduct(n, up);
 		}
+		public Vector3D getNormal(){
+			return n;
+		}
 		/**
 		 * Returns pairs of vector coordinates. Each of which represents a straight line defining the 
 		 * edge of the side
 		 * @return a list containing Vector3D[] arrays with two elements per array
-		 */
+		 */		
 		public ArrayList<Vector3D[]> getGrid(){
 			ArrayList<Vector3D[]> lines=new ArrayList<Vector3D[]>();
 			//Calculates the position of one corner of the side
