@@ -7,8 +7,8 @@ import java.util.ArrayList;
  */
 public class Cube {
 	//This is not measured in actual pixels!
-	private static final float SIDEWIDTH=200.0f;
-	private Side[] sides=new Side[]{new Side( new Vector3D(1, 0, 0), new Vector3D(0, 0, 1))};
+	private static final float SIDEWIDTH=1000.0f;
+	private Side[] sides=new Side[6];
 	private int squaresPerSide;
 	/**
 	 * Initailizes the cube divided into 6 sides with 
@@ -17,6 +17,9 @@ public class Cube {
 	 */
 	public Cube(int squaresPerSide){
 		this.squaresPerSide=squaresPerSide;
+	    sides[0]=new Side(new Vector3D(1, 0, 0), new Vector3D(0, 0, 1));
+	    
+	   
 	}
 	/**
 	 * Returns all renderable objects on the cube which are visible from the viewers perspective
@@ -31,8 +34,8 @@ public class Cube {
 	 * 
 	 * _____________________
 	 *|                     |
-	 *|                     |
-	 *|                     |
+	 *|       <-------      |
+	 *|        cross        |
 	 *|                     |
 	 *|  /|\     ________\  |
 	 *|   |      _|  n   /  |
@@ -40,11 +43,12 @@ public class Cube {
 	 *|                     |
 	 *|                     |
 	 *|_____________________|
-	 * 
+	 * The figure shows one side watched from the outside
+	 * cross points to the left on all sides
 	 * 
 	 */
 	private class Side{
-		Vector3D n,up,cross;
+		private Vector3D n,up,cross;
 		
 		/**
 		 * Initializes a side in the Cube
@@ -95,6 +99,7 @@ public class Cube {
 				throw new IllegalArgumentException("The vector must have the format (a,b,c) where a,b,c kan be 0 or 1 and have length 1");
 			}
 		}
+		
 	}
 	
 	

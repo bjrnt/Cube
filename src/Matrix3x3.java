@@ -24,7 +24,7 @@ public final class Matrix3x3 {
 	}
 	/**
 	 * 
-	 * @param i 0<i<2
+	 * @param i 0<=i<=2
 	 * @return row nr i
 	 */
 	public Vector3D getRow(int i){

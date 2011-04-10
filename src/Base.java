@@ -15,6 +15,7 @@ public class Base extends BasicGame {
 	private Translator translator;
 	
 	private Cube c;
+	private float rotation=0;
 	
 	private ArrayList<Vector3D> vl;
 	
@@ -66,7 +67,7 @@ public class Base extends BasicGame {
 		vl.add(new Vector3D(-50,-50,50));
 		//Game game = new Game(); For when the Game class exists
 		
-		c=new Cube(10);
+		c=new Cube(3);
 	}
 	
 	@Override
@@ -100,11 +101,13 @@ public class Base extends BasicGame {
 		renderCube(g);
 	}
 	private void renderCube(Graphics g){
+		rotation+=0.01;
+		MatrixTranslator mt=new MatrixTranslator(new Vector3D(1200, 0, 0), new Vector3D(700, 0, 0),0,rotation,rotation);
 		Vector2D trns,trns2;
 		ArrayList<Vector3D[]> cubeGrid=c.getGrid();
 		for (int i = 0; i < cubeGrid.size(); i++) {
-			trns = translator.translateTo2D(cubeGrid.get(i)[0]);
-			trns2 = translator.translateTo2D(cubeGrid.get(i)[1]);
+			trns = mt.screenTranslate(cubeGrid.get(i)[0]);
+			trns2 = mt.screenTranslate(cubeGrid.get(i)[1]);
 			g.drawLine(screenWidth/2+trns.getX(), screenHeight/2+trns.getY(), screenWidth/2+trns2.getX(), screenHeight/2+trns2.getY());
 			//System.out.println(cubeGrid.get(i)[0].getX()+"->"+trns.getX());
 		}
