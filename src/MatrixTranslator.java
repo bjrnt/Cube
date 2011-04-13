@@ -42,10 +42,13 @@ public class MatrixTranslator {
 	 */
 	public Vector2D screenTranslate(Vector3D v){
 		Vector3D trans = translate(v);
-		float x=trans.getZ()-e.getZ();
-		float y=trans.getY()-e.getY();
-//		float x=(trans.getZ()-e.getZ())/((c.getX()+e.getX())/(c.getX()+e.getX()-trans.getX()));
-//		float y=(trans.getY()-e.getY())/((c.getX()+e.getX())/(c.getX()+e.getX()-trans.getX()));
+
+		float w = -trans.getX()/(e.getX()-300) + 1;
+		float x = (trans.getZ() - e.getZ())/w;
+		float y = (trans.getY() - e.getY())/w;
+		
+		//System.out.println(w);
+		
 		return new Vector2D(x+SCREEN_WIDTH/2, y+SCREEN_HEIGHT/2);
 	}
 	/**
