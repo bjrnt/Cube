@@ -11,7 +11,7 @@ public class CubeTest {
 
 	@Test
 	public void testGetGrid() {
-		ArrayList<Vector3D[]> grid=c.getGrid();
+		ArrayList<Vector3D[]> grid=c.getGrid(null);//Will not work
 		for (int i = 0; i < grid.size(); i++) {
 			System.out.println(grid.get(i)[0]+","+grid.get(i)[1]);
 		}

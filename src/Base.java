@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.swing.plaf.basic.BasicLookAndFeel;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -16,6 +18,9 @@ public class Base extends BasicGame {
 	
 	private Cube c;
 	private float rotation=0;
+	private Square s;
+	Direction currentD=Direction.RIGHT;
+	int ticker=0;
 	
 	private ArrayList<Vector3D> vl;
 	
@@ -67,7 +72,8 @@ public class Base extends BasicGame {
 		vl.add(new Vector3D(-50,-50,50));
 		//Game game = new Game(); For when the Game class exists
 		
-		c=new Cube(10);
+		c=new Cube(30);
+		s=c.getSquare(0, 4, 5);
 	}
 	
 	@Override
@@ -98,6 +104,13 @@ public class Base extends BasicGame {
 //			g.drawLine(400+trns.getX(), 300-trns.getY(), 400+trns2.getX(), 300-trns2.getY());
 //		}
 		g.setColor(Color.gray);
+		//s=c.getSquare(5, 9, 3);
+//		s.setBackColor(Color.magenta);
+//		s=s.getNeighbor(Direction.RIGHT);
+//		s.setBackColor(Color.yellow);
+//		s=s.getNeighbor(Direction.LEFT).getNeighbor(Direction.DOWN);
+//		s.setBackColor(Color.pink);
+//		s.getNeighbor(Direction.RIGHT).setBackColor(Color.red);
 		renderCube(g);
 	}
 	/**
@@ -107,17 +120,58 @@ public class Base extends BasicGame {
 	 */
 	private void renderCube(Graphics g){
 		rotation+=0.01;
-		MatrixTranslator mt=new MatrixTranslator(rotation,rotation,rotation);
+		ticker++;
+		s.setBackColor(new Color(ticker%255, 255-(ticker%255), (ticker/2)%255));
+		if (ticker%100==0) {
+			currentD=Direction.randomDirection();
+		}
+		Square temp=s.getNeighbor(currentD);
+		if (temp!=null) {
+			s=temp;
+		}
+		
+		MatrixTranslator mt=new MatrixTranslator(rotation,rotation,2);
+		//A hot tip is to render the squares before the grid to have the grid lines cover the squares nicely
+		//rendering background squares
+		renderManySquares(c.getSquares(mt), g, mt);
+		
+		//rendering arrows
+		drawLines(g, mt, c.getArrows(mt), Color.red);
+		
+		//Rendering grid
+		
+		drawLines(g, mt,c.getGrid(mt),Color.lightGray);
+		
+	}
+
+	private void drawLines(Graphics g, MatrixTranslator mt,ArrayList<Vector3D[]> points, Color c) {
+		g.setColor(c);
 		Vector2D trns,trns2;
-		ArrayList<Vector3D[]> cubeGrid=c.getGrid(mt);
-		for (int i = 0; i < cubeGrid.size(); i++) {
-			trns = mt.screenTranslate(cubeGrid.get(i)[0]);
-			trns2 = mt.screenTranslate(cubeGrid.get(i)[1]);
-			g.drawLine(screenWidth/2+trns.getX(), screenHeight/2+trns.getY(), screenWidth/2+trns2.getX(), screenHeight/2+trns2.getY());
+		int l=points.size();
+		for (int i = 0; i < l; i++) {
+			trns = mt.screenTranslate(points.get(i)[0]);
+			trns2 = mt.screenTranslate(points.get(i)[1]);
+			g.drawLine(trns.getX(),trns.getY(),trns2.getX(), trns2.getY());
 		}
 	}
+	/**
+	 * Renders a square to the screen
+	 * @param g
+	 * @param mt
+	 * @param s
+	 */
 	private void renderSquare(Graphics g,MatrixTranslator mt,Square s){
-		
+		g.setColor(s.getBackColor());
+		g.fill(mt.translateSquare(s));
+	}
+	
+	private void renderManySquares(ArrayList<Square> squares,Graphics g,MatrixTranslator mt){
+		for (int i = 0; i < squares.size(); i++) {
+			if (squares.get(i)!=null) {
+				renderSquare(g, mt, squares.get(i));
+			}
+			
+		}
 	}
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {

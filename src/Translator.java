@@ -13,4 +13,6 @@ public class Translator {
 		float y = v3d.getY()/w;
 		return new Vector2D(y,z);
 	}
+	
+	
 }

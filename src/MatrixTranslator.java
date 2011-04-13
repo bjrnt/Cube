@@ -1,10 +1,15 @@
+import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.geom.Shape;
+
 /**
  * An attempt to solve the problem of translation
  * @author Johan
  *
  */
 public class MatrixTranslator {
-	float cosAx,sinAx,cosAy,sinAy,cosAz,sinAz;
+	private float cosAx,sinAx,cosAy,sinAy,cosAz,sinAz;
+	private static final int SCREEN_WIDTH=800;
+	private static final int SCREEN_HEIGHT=600;
 	//Where c is the cameras position and e is the viewers distance from the screen
 	Vector3D c=new Vector3D(0,0,0),e=new Vector3D(1000, 0, 0);
 	Matrix3x3 transMat;
@@ -21,18 +26,41 @@ public class MatrixTranslator {
 		Matrix3x3 zMat=new Matrix3x3(cosAz, -sinAz, 0, sinAz, cosAz, 0, 0, 0, 1);
 		transMat=Matrix3x3.multiplyMany(new Matrix3x3[]{xMat,yMat,zMat});
 	}
-	
+	/**
+	 * Translates a 3-dimensional vector into another according to the specifications stated earlier
+	 * @param v
+	 * @return the new vector
+	 */
 	public Vector3D translate(Vector3D v){
 		return transMat.translateVector(Vector3D.subtract(v, c));
 	}
+	/**
+	 * Translates a vector through rotations and specifications an projects it on the screen
+	 * which is the yz-plane
+	 * @param v
+	 * @return A 2D-vector that describes the vectors projection on the screen
+	 */
 	public Vector2D screenTranslate(Vector3D v){
 		Vector3D trans = translate(v);
 		float x=trans.getZ()-e.getZ();
 		float y=trans.getY()-e.getY();
 //		float x=(trans.getZ()-e.getZ())/((c.getX()+e.getX())/(c.getX()+e.getX()-trans.getX()));
 //		float y=(trans.getY()-e.getY())/((c.getX()+e.getX())/(c.getX()+e.getX()-trans.getX()));
-		return new Vector2D(x, y);
+		return new Vector2D(x+SCREEN_WIDTH/2, y+SCREEN_HEIGHT/2);
 	}
-	
+	/**
+	 * Translates a Square-object into screen coordinates by translating its corners through
+	 * all rotations and translations and projecting them on the screen
+	 * @return A Polygon object that represents the square's projection and is ready for drawing
+	 */
+	public Polygon translateSquare(Square s){
+		Polygon p=new Polygon();
+		Vector2D point;
+		for (int i = 0; i < 4; i++) {
+			point=screenTranslate(s.getCorner(i));
+			p.addPoint(point.getX(), point.getY());
+		}
+		return p;
+	}
 	
 }
