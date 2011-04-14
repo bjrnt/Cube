@@ -17,10 +17,54 @@ public final class Vector2D {
 	public float getY(){
 		return y;
 	}
+	/**
+	 * @return the length of this vector
+	 */
+	public float length(){
+		return (float)Math.sqrt(x*x+y*y);
+	}
 	public String toString() {
 		return "("+x+","+y+")";
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Float.floatToIntBits(x);
+		result = prime * result + Float.floatToIntBits(y);
+		return result;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Vector2D)) {
+			return false;
+		}
+		Vector2D other = (Vector2D) obj;
+		if (Float.floatToIntBits(x) != Float.floatToIntBits(other.x)) {
+			return false;
+		}
+		if (Float.floatToIntBits(y) != Float.floatToIntBits(other.y)) {
+			return false;
+		}
+		return true;
+	}
+
+
 	//STATIC METHODS
 	/**
 	 * Adds two vectors

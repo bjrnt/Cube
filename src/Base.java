@@ -28,8 +28,8 @@ public class Base extends BasicGame {
 		container.setVSync(true);
 		//Game game = new Game(); For when the Game class exists
 		
-		c=new Cube(30);
-		s=c.getSquare(0, 4, 5);
+		c=new Cube(10);
+		s=c.getSquare(0, 0, 0);
 	}
 	
 	@Override

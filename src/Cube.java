@@ -6,6 +6,7 @@ import org.newdawn.slick.Color;
 
 import com.sun.corba.se.impl.orb.NormalDataCollector;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+import com.sun.xml.internal.ws.org.objectweb.asm.ByteVector;
 
 /**
  * The graphical interpretation of a Cube in three dimensions
@@ -42,7 +43,7 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
  */
 public class Cube {
 	//This is not measured in actual pixels!
-	private static final float SIDEWIDTH=200.0f;
+	private static final float SIDEWIDTH=300.0f;
 	private static final float RADIUS=SIDEWIDTH/2;
 	private Side[] sides=new Side[6];
 	private int squaresPerSide;
@@ -88,14 +89,15 @@ public class Cube {
 	public ArrayList<Vector3D[]> getGrid(MatrixTranslator mt){
 		ArrayList<Vector3D[]> lines=new ArrayList<Vector3D[]>();
 		for (int i = 0; i < sides.length; i++) {
-			if (mt.translate(sides[i].getNormal()).getX()>0) {
+			if (mt.sideVisible(sides[i].getCorners(),sides[i].getNormal())) {
 				lines.addAll(sides[i].getGrid());
 			}
 		}
 		return  lines;
 	}
 	/**
-	 * 
+	 * Returns an arraylist containing the pairs of 3D-vectors which
+	 * mark the lines forming the arrows
 	 * @param mt
 	 * @return
 	 */
@@ -103,7 +105,7 @@ public class Cube {
 		ArrayList<Vector3D[]> arrows=new ArrayList<Vector3D[]>();
 		int l=sides.length;
 		for (int i = 0; i < l ; i++) {
-			if (mt.translate(sides[i].getNormal()).getX()>0) {
+			if (mt.sideVisible(sides[i].getCorners(), sides[i].getNormal())) {
 				arrows.addAll(sides[i].getArrow());
 			}
 		}
@@ -127,7 +129,7 @@ public class Cube {
 	public ArrayList<Square> getSquares(MatrixTranslator mt){
 		ArrayList<Square> squares=new ArrayList<Square>();
 		for (int i = 0; i < sides.length; i++) {
-			if (mt.translate(sides[i].getNormal()).getX()>0) {
+			if (mt.sideVisible(sides[i].getCorners(), sides[i].getNormal())) {
 				squares.addAll(sides[i].getSquares());
 			}
 		}
@@ -157,8 +159,10 @@ public class Cube {
 	private class Side{
 		//cross is the crossproduct of n and up and thus cross is 
 		//pointing to the left when looking at it from the outside
-		private Vector3D n,up,cross;
+		private final Vector3D n,up,cross;
+		private final Vector3D[] corners=new Vector3D[4];
 		private Square[][] squaregrid=new Square[squaresPerSide][squaresPerSide];
+		
 		/**
 		 * Initializes a side in the Cube
 		 * @param sideWidth
@@ -173,7 +177,18 @@ public class Cube {
 			up=upDirection;
 			cross=Vector3D.crossProduct(n, up);
 			initializeSquares();
+			
+			//Setting corners in
+			//upper left
+			corners[0]=Vector3D.add(Vector3D.add(Vector3D.scalarMultiplication(n, RADIUS), Vector3D.scalarMultiplication(up, RADIUS)),Vector3D.scalarMultiplication(cross, RADIUS));
+			//upper right
+			corners[1]=Vector3D.add(corners[0],Vector3D.scalarMultiplication(cross, -2*RADIUS));
+			//lower right
+			corners[2]=Vector3D.add(corners[1], Vector3D.scalarMultiplication(up, -2*RADIUS));
+			//lower left
+			corners[3]=Vector3D.add(corners[2], Vector3D.scalarMultiplication(cross, 2*RADIUS));
 		}
+		
 		/**
 		 * Initializes the squares containing all information on what's on the Cube
 		 */
@@ -228,12 +243,12 @@ public class Cube {
 			boolean reverseEdgeList=false;//Determines whether we have to reverse the order by which elements are merged
 			Vector3D crossProd=null;//defines the cross-product of the up-vectors of the two sides
 			//Here comes a monstrously long if-statement to determine which of the 16 possible cases
-			//
+			//is the one to apply on this case
 			if (d==Direction.RIGHT||d==Direction.LEFT) {
 				//right-left and left-right
 				if (this.up.equals(otherSide.up)) {//If this is the simplest of all merges, that is if a Square's right neighbor has the Square as it's left neighbor and vice versa
 					otherD=Direction.opposite(d);
-					reverseEdgeList=false;
+					//reverseEdgeList=false;
 				}//right-right and left-left
 				else if(this.up.equals(Vector3D.scalarMultiplication(otherSide.up, -1))){//If one of the sides is oriented "up side down" compared to the first.
 					otherD=d;
@@ -245,17 +260,19 @@ public class Cube {
 						otherD=Direction.DOWN;
 						if (d==Direction.LEFT) {
 							reverseEdgeList=true;
-						}else{//d==right
-							reverseEdgeList=false;
 						}
+//						else{//d==right
+//							reverseEdgeList=false;
+//						}
 					}//right-up and left-up
 					else{//crossProd==-cross
 						otherD=Direction.UP;
 						if (d==Direction.LEFT) {
 							reverseEdgeList=true;
-						}else{//d=right
-							reverseEdgeList=false;
 						}
+//						else{//d=right
+//							reverseEdgeList=false;
+//						}
 					}
 				}
 			}else{//If direction is UP or DOWN
@@ -266,7 +283,7 @@ public class Cube {
 						reverseEdgeList=true;
 						otherD=Direction.LEFT;
 					}else{//d=DOWN
-						reverseEdgeList=false;
+						//reverseEdgeList=false;
 						otherD=Direction.RIGHT;
 					}
 				}//up-right and down left
@@ -275,7 +292,7 @@ public class Cube {
 						reverseEdgeList=true;
 						otherD=Direction.RIGHT;
 					}else{//d=DOWN
-						reverseEdgeList=false;
+						//reverseEdgeList=false;
 						otherD=Direction.LEFT;
 					}
 				}//up-down and down-down
@@ -283,17 +300,19 @@ public class Cube {
 					otherD=Direction.DOWN;
 					if (d==Direction.DOWN) {
 						reverseEdgeList=true;
-					}else{//d=UP
-						reverseEdgeList=false;
 					}
+//					else{//d=UP
+//						reverseEdgeList=false;
+//					}
 				}else{//crossProd==-this.cross 
 					//up-up and down-up
 					otherD=Direction.UP;
 					if (d==Direction.UP) {
 						reverseEdgeList=true;
-					}else{//d=DOWN
-						reverseEdgeList=false;
 					}
+//					else{//d=DOWN
+//						reverseEdgeList=false;
+//					}
 					
 				}
 			}
@@ -367,7 +386,19 @@ public class Cube {
 			}
 			return squares;
 		}
-
+        /**
+         * Returns the corners in this order upper left,upper right,lower right,lower left
+         * That is, in a circular fashion
+         *   ----->
+         *  /|\   |
+         *   |    |
+         *   |   \|/
+         *   <-----     
+         *@return an array containing 4 3D-vectors that represent the Side's corners
+         */
+		public Vector3D[] getCorners(){
+			return corners;
+		}
 		/**
 		 * 
 		 * @return the normal of this Side. pointing outwards when observed from a point far away from the cube
@@ -431,7 +462,6 @@ public class Cube {
 			arrow.add(new Vector3D[]{Vector3D.add(center, upSpacing),Vector3D.add(Vector3D.add(center, leftSpacing),Vector3D.scalarMultiplication(upSpacing, -1/(float)squaresPerSide))});     
 			arrow.add(new Vector3D[]{Vector3D.add(Vector3D.add(center, leftSpacing),Vector3D.scalarMultiplication(upSpacing, -1/(float)squaresPerSide)),Vector3D.add(center,Vector3D.scalarMultiplication(leftSpacing, 0.3f))});
 			arrow.add(new Vector3D[]{Vector3D.add(center,Vector3D.scalarMultiplication(leftSpacing, 0.3f)),Vector3D.add(Vector3D.scalarMultiplication(upSpacing, -1), Vector3D.add(center,Vector3D.scalarMultiplication(leftSpacing, 0.3f)))});
-			System.out.println(arrow.size());
 			return arrow;
 			
 		}
