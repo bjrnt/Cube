@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-import javax.swing.plaf.basic.BasicLookAndFeel;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -16,7 +15,7 @@ public class Base extends BasicGame {
 	private Cube c;
 	private float rotation=0;
 	private Square s;
-	Direction currentD=Direction.RIGHT;
+	Direction currentD=Direction.DOWN;
 	int ticker=0;
 	
 	public Base() {
@@ -46,7 +45,7 @@ public class Base extends BasicGame {
 		rotation+=0.01;
 		ticker++;
 		s.setBackColor(new Color(ticker%255, 255-(ticker%255), (ticker/2)%255));
-		if (ticker%100==0) {
+		if (ticker%3==0) {
 			currentD=Direction.randomDirection();
 		}
 		Square temp=s.getNeighbor(currentD);
@@ -101,6 +100,7 @@ public class Base extends BasicGame {
 	public void update(GameContainer container, int delta) throws SlickException {
 		//game.update(delta); Update game logic
 	}
+	
 	
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer container = new AppGameContainer(new Base(), screenWidth, screenHeight,false);
