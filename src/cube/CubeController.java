@@ -21,7 +21,6 @@ public class CubeController {
 	 * TODO Tidy this up
 	 */
 	public void runAnimation() {
-		System.out.println(c.getRotY());
 		if(Math.abs(targetRotY) > 0.015f || Math.abs(targetRotZ) > 0.015f) {
 			if(Math.abs(targetRotY) > 0.015f) {
 				c.setRotY(c.getRotY() + (c.getRotY() - (c.getRotY() + targetRotY)) * 0.1f);

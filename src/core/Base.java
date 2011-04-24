@@ -1,9 +1,12 @@
 package core;
 
+import game.Game;
 import game.GameController;
 
 import java.util.ArrayList;
 
+import menu.Menu;
+import menu.MenuItem;
 import objectTypes.Vector2D;
 import objectTypes.Vector3D;
 
@@ -35,6 +38,8 @@ public class Base extends BasicGame {
 	private InputHandler ih;
 	private CubeController cc;
 	private GameController gc;
+	private Menu menu;
+	private Game game;
 	
 	private Cube c;
 	private Square s;
@@ -64,6 +69,15 @@ public class Base extends BasicGame {
 		s = c.getSquare(0, 0, 0);
 		input = container.getInput();
 		cc = new CubeController(c);
+		
+		game = new Game(c.getSquare(0, 0, 0));
+		gc = new GameController(game);
+		
+		menu = new Menu(input);
+		menu.enableMenuClick();
+	}
+	
+	private void enableCubeInput() {
 		ih = new InputHandler(input, cc, gc);
 	}
 
@@ -73,7 +87,17 @@ public class Base extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
+		
 		background.draw(0,0);
+		
+		if(menu.getActive()) {
+			ArrayList<MenuItem> menuItems = menu.getMenuItems();
+			for(int i = 0; i < menuItems.size(); i++) {
+				menuItems.get(i).getImage().draw(menuItems.get(i).getX(), menuItems.get(i).getY());
+			}
+			return;
+		}
+		
 		renderCube(g);
 	}
 	
@@ -102,7 +126,8 @@ public class Base extends BasicGame {
 		renderManySquares(c.getSquares(mt), g, mt);
 
 		// rendering arrows
-		drawLines(g, mt, c.getArrows(mt), Color.red);
+		if(ih.usingPrimaryKeySet())
+			drawLines(g, mt, c.getArrows(mt), Color.red);
 
 		// Rendering grid
 		drawLines(g, mt, c.getGrid(mt), Color.lightGray);
@@ -145,8 +170,14 @@ public class Base extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
+		if(menu.getActive()) {
+			return;
+		}
+		if(ih == null)
+			enableCubeInput();
+		
 		cc.runAnimation();
-		// game.update(delta); Update game logic
+		game.update(delta);
 	}
 
 	public static void main(String[] args) throws SlickException {

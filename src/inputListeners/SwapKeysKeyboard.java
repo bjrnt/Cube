@@ -32,14 +32,10 @@ public class SwapKeysKeyboard implements KeyListener {
 	
 	@Override
 	public void inputEnded() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void inputStarted() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -49,8 +45,6 @@ public class SwapKeysKeyboard implements KeyListener {
 
 	@Override
 	public void setInput(Input arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

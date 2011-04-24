@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.KeyListener;
 import cube.CubeController;
+import cube.Direction;
 
 /**
  * Used to get and change things using input from a keyboard.
@@ -18,7 +19,6 @@ public class InputHandler {
 	
 	ArrayList<KeyListener> activeKeyListeners;
 	private boolean primaryKeySet;
-	
 	
 	/**
 	 * Creates a new InputHandler.
@@ -51,6 +51,11 @@ public class InputHandler {
 		activeKeyListeners.add(new RotationKeyboard(cc, Input.KEY_S, Rotation.Z, true, false));
 		activeKeyListeners.add(new RotationKeyboard(cc, Input.KEY_A, Rotation.Y, true, false));
 		activeKeyListeners.add(new RotationKeyboard(cc, Input.KEY_D, Rotation.Y, false, false));
+		
+		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_UP, Direction.UP));
+		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_DOWN, Direction.DOWN));
+		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_LEFT, Direction.LEFT));
+		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_RIGHT, Direction.RIGHT));
 		
 		activateListeners();
 		primaryKeySet = true;
@@ -97,5 +102,12 @@ public class InputHandler {
 			input.removeKeyListener(activeKeyListeners.get(i));
 		}
 		activeKeyListeners = new ArrayList<KeyListener>();
+	}
+	
+	/**
+	 * Used to determine whether the arrows should be rendered or not.
+	 */
+	public boolean usingPrimaryKeySet() {
+		return primaryKeySet;
 	}
 }
