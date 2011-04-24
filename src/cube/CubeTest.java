@@ -1,13 +1,11 @@
-import static org.junit.Assert.*;
-
+package cube;
 import java.util.ArrayList;
-
+import objectTypes.Vector3D;
 import org.junit.Test;
 
 
 public class CubeTest {
 	Cube c=new Cube(3);
-
 
 	@Test
 	public void testGetGrid() {

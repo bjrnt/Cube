@@ -1,12 +1,9 @@
+package cube;
+
 import java.util.ArrayList;
-import java.util.EnumMap;
+import objectTypes.Vector3D;
+import core.MatrixTranslator;
 
-import org.lwjgl.Sys;
-import org.newdawn.slick.Color;
-
-import com.sun.corba.se.impl.orb.NormalDataCollector;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-import com.sun.xml.internal.ws.org.objectweb.asm.ByteVector;
 
 /**
  * The graphical interpretation of a Cube in three dimensions
@@ -47,8 +44,10 @@ public class Cube {
 	private static final float RADIUS=SIDEWIDTH/2;
 	private Side[] sides=new Side[6];
 	private int squaresPerSide;
+	private float rotX, rotY, rotZ;
+
 	/**
-	 * Initailizes the cube divided into 6 sides with 
+	 * Initializes the cube divided into 6 sides with 
 	 * sideWidth*sideWidth number of squares on each side
 	 * @param sideWidth The number of squares 
 	 */
@@ -56,6 +55,10 @@ public class Cube {
 		if (squaresPerSide<1) {
 			throw new IllegalArgumentException("The cube must have at least one field per side!");
 		}
+		setRotX(0);
+		setRotY(0);
+		setRotZ(0);
+
 		this.squaresPerSide=squaresPerSide;
 		//Creating sides
 		sides[0]=new Side(new Vector3D(1, 0, 0), new Vector3D(0, 0, 1));
@@ -74,7 +77,7 @@ public class Cube {
 		sides[5].mergeEdge(Direction.UP, sides[0]);
 		sides[5].mergeEdge(Direction.DOWN, sides[2]);
 		sides[5].mergeEdge(Direction.LEFT, sides[3]);
-		
+
 		sides[4].mergeEdge(Direction.DOWN, sides[0]);
 		sides[4].mergeEdge(Direction.RIGHT, sides[1]);
 		sides[4].mergeEdge(Direction.UP, sides[2]);
@@ -134,8 +137,29 @@ public class Cube {
 			}
 		}
 
-		
+
 		return squares;
+	}
+
+	public void setRotX(float rotX) {
+		this.rotX = rotX;
+	}
+	public float getRotX() {
+		return rotX;
+	}
+
+	public void setRotY(float rotY) {
+		this.rotY = rotY;
+	}
+	public float getRotY() {
+		return rotY;
+	}
+
+	public void setRotZ(float rotZ) {
+		this.rotZ = rotZ;
+	}
+	public float getRotZ() {
+		return rotZ;
 	}
 
 	/**
@@ -162,7 +186,7 @@ public class Cube {
 		private final Vector3D n,up,cross;
 		private final Vector3D[] corners=new Vector3D[4];
 		private Square[][] squaregrid=new Square[squaresPerSide][squaresPerSide];
-		
+
 		/**
 		 * Initializes a side in the Cube
 		 * @param sideWidth
@@ -177,7 +201,7 @@ public class Cube {
 			up=upDirection;
 			cross=Vector3D.crossProduct(n, up);
 			initializeSquares();
-			
+
 			//Setting corners in
 			//upper left
 			corners[0]=Vector3D.add(Vector3D.add(Vector3D.scalarMultiplication(n, RADIUS), Vector3D.scalarMultiplication(up, RADIUS)),Vector3D.scalarMultiplication(cross, RADIUS));
@@ -188,7 +212,7 @@ public class Cube {
 			//lower left
 			corners[3]=Vector3D.add(corners[2], Vector3D.scalarMultiplication(cross, 2*RADIUS));
 		}
-		
+
 		/**
 		 * Initializes the squares containing all information on what's on the Cube
 		 */
@@ -313,7 +337,7 @@ public class Cube {
 //					else{//d=DOWN
 //						reverseEdgeList=false;
 //					}
-					
+
 				}
 			}
 
@@ -449,7 +473,7 @@ public class Cube {
 		public ArrayList<Vector3D[]> getArrow(){
 			ArrayList<Vector3D[]> arrow=new ArrayList<Vector3D[]>();	
 			//Setting a few helping vectors
-			
+
 			Vector3D leftSpacing=Vector3D.scalarMultiplication(cross, RADIUS);
 			Vector3D upSpacing=Vector3D.scalarMultiplication(up, RADIUS);
 			Vector3D center=Vector3D.scalarMultiplication(n, RADIUS);
@@ -463,9 +487,9 @@ public class Cube {
 			arrow.add(new Vector3D[]{Vector3D.add(Vector3D.add(center, leftSpacing),Vector3D.scalarMultiplication(upSpacing, -1/(float)squaresPerSide)),Vector3D.add(center,Vector3D.scalarMultiplication(leftSpacing, 0.3f))});
 			arrow.add(new Vector3D[]{Vector3D.add(center,Vector3D.scalarMultiplication(leftSpacing, 0.3f)),Vector3D.add(Vector3D.scalarMultiplication(upSpacing, -1), Vector3D.add(center,Vector3D.scalarMultiplication(leftSpacing, 0.3f)))});
 			return arrow;
-			
+
 		}
-		
+
 		private void checkVector(Vector3D v){
 			if (v.length()!=1) {
 				throw new IllegalArgumentException("The vector must have the format (a,b,c) where a,b,c kan be 0 or 1 and have length 1");
@@ -473,8 +497,3 @@ public class Cube {
 		}
 	}
 }
-
-
-
-
-

@@ -1,11 +1,18 @@
+package core;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.text.StyledEditorKit.ForegroundAction;
 
+import objectTypes.Matrix3x3;
+import objectTypes.Vector2D;
+import objectTypes.Vector3D;
+
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Shape;
+
+import cube.Square;
 
 /**
  * An attempt to solve the problem of translation

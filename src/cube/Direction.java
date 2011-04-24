@@ -1,10 +1,11 @@
+package cube;
 import java.util.Random;
-
 
 public enum Direction {
 	//Declared in counterclockwise order to allow the turn-method to work
      RIGHT,UP,LEFT,DOWN;
      private static Random randomizer=new Random();
+     
      /**
       * Returns the direction you get if you turn the current direction counter-clockwise
       * a specified number of quartercircles. Angle is measured in 90 degrees at a time since there
@@ -20,9 +21,11 @@ public enum Direction {
     	 quarterCirclesTurned%=4;
     	 return values()[quarterCirclesTurned];
      }
+     
      public static Direction randomDirection(){
     	 return values()[randomizer.nextInt(4)];
      }
+     
      public static Direction opposite(Direction d){
     	 return values()[(d.ordinal()+2)%4];
      }

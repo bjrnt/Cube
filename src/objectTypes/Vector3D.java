@@ -1,3 +1,4 @@
+package objectTypes;
 /**
  * Representing a methematical vector in threespace
  * THIS IS AN IMMUTABLE CLASS

@@ -1,23 +1,23 @@
+package cube;
 import java.util.EnumMap;
-
+import objectTypes.Vector3D;
 import org.newdawn.slick.Color;
-
-
 
 /**
  * Represents a square in 3-space. Or more precise any figure with 
  * four corners in 3-space 
  * This class is semi-immutable. The corners cannot be changed, but other properties can.
+ * 
  * @author Johan
- *
  */
 public class Square {
 	private Vector3D[] corners=new Vector3D[4];
 	//On a cube or in a grid, each Square has four neighbors
-	private EnumMap<Direction, Square> neighbors=new EnumMap<Direction, Square>(Direction.class);
 	
+	private EnumMap<Direction, Square> neighbors=new EnumMap<Direction, Square>(Direction.class);
 	private Color
 	backColor= Color.white;
+	
 	/**
 	 * 
 	 * @param c1 The vector representing the first corner
@@ -42,12 +42,15 @@ public class Square {
 		}
 		return corners[i];
 	}
+	
 	public void setBackColor(Color c){
 		backColor=c;
 	}
+	
 	public Color getBackColor(){
 		return backColor;
 	}
+	
 	/**
 	 * Sets a neighboring Square 
 	 * @param d the direction left,right,up or down to which the new neighbor is attached
@@ -66,9 +69,11 @@ public class Square {
 		neighbor.neighbors.put(neighborD, this);
 		
 	}
+	
 	public Square getNeighbor(Direction d){
 		return neighbors.get(d);
 	}
+	
 	/**
 	 * Returns a random Neighbor
 	 * @return

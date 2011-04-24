@@ -1,3 +1,5 @@
+package objectTypes;
+
 public class GameObject {
 private Vector3D position;
 	

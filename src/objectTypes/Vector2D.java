@@ -1,3 +1,4 @@
+package objectTypes;
 /**
  * Represents a vector in euclidean 2-space
  * @author Johan
