@@ -7,7 +7,7 @@ public abstract class AbstractKeyboardListener implements KeyListener{
 	private boolean isAccepting;
 	private int keyCode;
 	
-	public AbstractKeyboardListener(int keyCode) {
+	protected AbstractKeyboardListener(int keyCode) {
 		this.keyCode = keyCode;
 		isAccepting = true;
 	}
