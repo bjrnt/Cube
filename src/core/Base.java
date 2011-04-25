@@ -5,8 +5,8 @@ import game.GameController;
 
 import java.util.ArrayList;
 
-import menu.Menu;
-import menu.MenuItem;
+import ui.UI;
+import ui.UIButton;
 import objectTypes.Vector2D;
 import objectTypes.Vector3D;
 
@@ -38,7 +38,7 @@ public class Base extends BasicGame {
 	private InputHandler ih;
 	private CubeController cc;
 	private GameController gc;
-	private Menu menu;
+	private UI ui;
 	private Game game;
 	
 	private Cube c;
@@ -62,21 +62,26 @@ public class Base extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		container.setVSync(true);
-		// Game game = new Game(); For when the Game class exists
 		
 		background = new Image("data/bg.jpg");
+		
 		c = new Cube(10);
 		s = c.getSquare(0, 0, 0);
+		
 		input = container.getInput();
 		cc = new CubeController(c);
 		
 		game = new Game(c.getSquare(0, 0, 0));
 		gc = new GameController(game);
 		
-		menu = new Menu(input);
-		menu.enableMenuClick();
+		ui = new UI(input);
+		ui.loadMenuButtons();
+		ui.enableClick();
 	}
 	
+	/**
+	 * Enables the use of the keyboard to control the rotation of the Cube and the selected square.
+	 */
 	private void enableCubeInput() {
 		ih = new InputHandler(input, cc, gc);
 	}
@@ -90,15 +95,23 @@ public class Base extends BasicGame {
 		
 		background.draw(0,0);
 		
-		if(menu.getActive()) {
-			ArrayList<MenuItem> menuItems = menu.getMenuItems();
-			for(int i = 0; i < menuItems.size(); i++) {
-				menuItems.get(i).getImage().draw(menuItems.get(i).getX(), menuItems.get(i).getY());
-			}
+		if(ui.getMenuActive()) {
+			renderUI();
 			return;
 		}
 		
 		renderCube(g);
+		renderUI();
+	}
+	
+	/**
+	 * Renders all the currently active buttons in the UI.
+	 */
+	private void renderUI() {
+		ArrayList<UIButton> buttons = ui.getButtons();
+		for(int i = 0; i < buttons.size(); i++) {
+			buttons.get(i).getImage().draw(buttons.get(i).getX(), buttons.get(i).getY());
+		}
 	}
 	
 	/**
@@ -126,8 +139,9 @@ public class Base extends BasicGame {
 		renderManySquares(c.getSquares(mt), g, mt);
 
 		// rendering arrows
-		if(ih.usingPrimaryKeySet())
-			drawLines(g, mt, c.getArrows(mt), Color.red);
+		if(ih != null)
+			if(ih.usingPrimaryKeySet())
+				drawLines(g, mt, c.getArrows(mt), Color.red);
 
 		// Rendering grid
 		drawLines(g, mt, c.getGrid(mt), Color.lightGray);
@@ -145,13 +159,6 @@ public class Base extends BasicGame {
 		}
 	}
 
-	/**
-	 * Renders a square to the screen
-	 * 
-	 * @param g
-	 * @param mt
-	 * @param s
-	 */
 	private void renderSquare(Graphics g, MatrixTranslator mt, Square s) {
 		g.setColor(s.getBackColor());
 		g.fill(mt.translateSquare(s));
@@ -170,11 +177,13 @@ public class Base extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
-		if(menu.getActive()) {
+		if(ui.getMenuActive()) {
 			return;
 		}
-		if(ih == null)
+		if(ih == null) {
 			enableCubeInput();
+			ui.loadIngameButtons();
+		}
 		
 		cc.runAnimation();
 		game.update(delta);
