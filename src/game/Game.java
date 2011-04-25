@@ -13,16 +13,23 @@ public class Game {
 		selectedSquare = startSquare;
 	}
 	
-	public void changeSquare(Direction d) {
-		selectedSquare.setBackColor(previousColor);
-		selectedSquare = selectedSquare.getNeighbor(d);
-		previousColor = selectedSquare.getBackColor();
-	}
-	
 	public void update(int delta) {
 		if(selectedSquare.getBackColor() == previousColor)
 			selectedSquare.setBackColor(Color.yellow);
 		else
 			selectedSquare.setBackColor(previousColor);
+	}
+	
+	public void setSquare(Square s) {
+		selectedSquare.setBackColor(previousColor);
+		selectedSquare = s;
+		previousColor = selectedSquare.getBackColor();
+	}
+	
+	public Square getSquare() {
+		if(selectedSquare.getBackColor() != previousColor)
+			selectedSquare.setBackColor(previousColor);
+		
+		return selectedSquare;
 	}
 }
