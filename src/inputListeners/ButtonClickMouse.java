@@ -6,7 +6,7 @@ import ui.UI;
 import ui.UIButton;
 
 /**
- * Used to listen after clicks on MenuItems in the Menu.
+ * Used to listen after clicks on buttons in the UI.
  * @author Björn Tegelund
  */
 public class ButtonClickMouse extends AbstractMouseListener {
@@ -14,7 +14,7 @@ public class ButtonClickMouse extends AbstractMouseListener {
 	private ArrayList<UIButton> buttons;
 
 	/**
-	 * Creates a new mouse listener listening for clicks on MenuItems in the Menu.
+	 * Creates a new mouse listener listening for clicks on buttons in the UI.
 	 */
 	public ButtonClickMouse(UI ui) {
 		super(Input.MOUSE_LEFT_BUTTON);

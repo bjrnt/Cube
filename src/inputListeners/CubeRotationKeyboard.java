@@ -7,9 +7,6 @@ import cube.CubeController;
  * @author Björn Tegelund
  */
 public class CubeRotationKeyboard extends AbstractKeyboardListener {
-	/**
-	 * Used to control what directions of rotation are possible.
-	 */
 	public enum Rotation {
 		X,
 		Y,
