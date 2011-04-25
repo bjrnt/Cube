@@ -291,10 +291,10 @@ public class Cube {
 					}//right-up and left-up
 					else{//crossProd==-cross
 						otherD=Direction.UP;
-						if (d==Direction.LEFT) {
+						if (d==Direction.RIGHT) {
 							reverseEdgeList=true;
 						}
-//						else{//d=right
+//						else{//d=left
 //							reverseEdgeList=false;
 //						}
 					}
