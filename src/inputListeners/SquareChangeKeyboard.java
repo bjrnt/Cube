@@ -1,51 +1,34 @@
 package inputListeners;
 
 import game.GameController;
-
-import org.newdawn.slick.Input;
-import org.newdawn.slick.KeyListener;
-
 import cube.Direction;
 
-public class SquareChangeKeyboard implements KeyListener {
-	private boolean isAccepting;
-	private int keyCode;
+/**
+ * Used to listen for certain keyboard input and then changing the selected Square on the Cube accordingly.
+ * @author Björn Tegelund
+ */
+public class SquareChangeKeyboard extends AbstractKeyboardListener {
 	private Direction dir;
 	private GameController gc;
 	
+	/**
+	 * Creates a new SquareChangeKeyboard.
+	 * @param gc The GameController used to change the Game's currently selected Square.
+	 * @param keyCode The key code of the key that should trigger this listener.
+	 * @param d The direction the selected Square should be moved when triggered.
+	 */
 	public SquareChangeKeyboard(GameController gc, int keyCode, Direction d) {
-		this.keyCode = keyCode;
+		super(keyCode);
 		this.gc = gc;
 		dir = d;
-		isAccepting = true;
 	}
-	
+
 	@Override
-	public void keyPressed(int keyI, char keyC) {
-		if(keyI != keyCode)
-			return;
-		
+	public void pressed() {
 		gc.directionKeyPressed(dir);
 	}
 
 	@Override
-	public void keyReleased(int keyI, char keyC) {
-	}
-	
-	@Override
-	public void inputEnded() {
-	}
-
-	@Override
-	public void inputStarted() {
-	}
-
-	@Override
-	public boolean isAcceptingInput() {
-		return isAccepting;
-	}
-
-	@Override
-	public void setInput(Input arg0) {
+	public void released() {
 	}
 }

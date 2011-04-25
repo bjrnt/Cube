@@ -7,7 +7,7 @@ import core.InputHandler;
 import cube.CubeController;
 
 /**
- * A class used to listen for keyboard input, and then swaps the key set used in the InputHandler.
+ * Used to listen for keyboard input, and then swaps the key set used in the InputHandler.
  * @author Björn Tegelund
  */
 public class SwapKeysKeyboard implements KeyListener {

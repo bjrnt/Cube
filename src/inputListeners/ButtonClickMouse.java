@@ -22,14 +22,15 @@ public class ButtonClickMouse implements MouseListener {
 	 */
 	public ButtonClickMouse(UI ui) {
 		this.ui = ui;
-		this.buttons = ui.getButtons();
 		isAccepting = true;
 	}
 
 	@Override
-	public void mouseClicked(int button, int x, int y, int clickCount) {
-		if(button != Input.MOUSE_LEFT_BUTTON)
+	public void mouseClicked(int pressed, int x, int y, int clickCount) {
+		if(pressed != Input.MOUSE_LEFT_BUTTON)
 			return;
+		
+		this.buttons = ui.getButtons();
 		
 		for(int i = 0; i < buttons.size(); i++) { //Checks to see which item has been clicked
 			if(buttons.get(i).getRect().contains(x, y)) { 
