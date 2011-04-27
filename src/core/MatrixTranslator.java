@@ -1,17 +1,11 @@
 package core;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-
-import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import objectTypes.Matrix3x3;
 import objectTypes.Vector2D;
 import objectTypes.Vector3D;
 
 import org.newdawn.slick.geom.Polygon;
-import org.newdawn.slick.geom.Shape;
+
 
 import cube.Square;
 
@@ -38,7 +32,9 @@ public class MatrixTranslator {
 		Matrix3x3 xMat=new Matrix3x3(1, 0, 0, 0,cosAx, -sinAx, 0, sinAx, cosAx);
 		Matrix3x3 yMat=new Matrix3x3(cosAy, 0, sinAy, 0, 1, 0, -sinAy, 0, cosAy);
 		Matrix3x3 zMat=new Matrix3x3(cosAz, -sinAz, 0, sinAz, cosAz, 0, 0, 0, 1);
-		transMat=Matrix3x3.multiplyMany(new Matrix3x3[]{xMat,yMat,zMat});
+		//transMat=Matrix3x3.multiplyMany(new Matrix3x3[]{xMat,yMat,zMat});
+		transMat=Matrix3x3.multiply(yMat, zMat);
+		transMat=Matrix3x3.multiply(xMat, transMat);
 	}
 	/**
 	 * Translates a 3-dimensional vector into another according to the specifications stated earlier
@@ -64,8 +60,8 @@ public class MatrixTranslator {
 		Vector3D trans = translate(v);
 
 		float w = -trans.getX()/(e.getX()-300) + 1;
-		float x = (trans.getZ() - e.getZ())/w;
-		float y = (trans.getY() - e.getY())/w;
+		float y = -(trans.getZ() - e.getZ())/w;
+		float x = (trans.getY() - e.getY())/w;
 		return new Vector2D(x, y);
 	}
 	/**
@@ -90,12 +86,12 @@ public class MatrixTranslator {
 	 * the squares four corners
 	 * 
 	 * This is a very long and complicated solution but it works!
-	 * @param corners Must be four and must contain Vectors representing the corners of the side
+	 * @param vectorInPlane MUST be a vector in the plane that constitutes 
 	 * @param normal The sides normal since in some cases the corners aren't enough
 	 * @return Whether this side is visible or not
 	 */
-	public boolean sideVisible(Vector3D[] corners,Vector3D normal){
-		float dot1=Vector3D.dotProduct(translate(normal), translate(corners[1]));
+	public boolean sideVisible(Vector3D vectorInPlane,Vector3D normal){
+		float dot1=Vector3D.dotProduct(translate(normal), translate(vectorInPlane));
 		float dot2=Vector3D.dotProduct(translate(normal), Vector3D.subtract(e, c));
 		//System.out.println(dot1+" and "+ dot2);
 		if (dot1<dot2) {
@@ -103,56 +99,6 @@ public class MatrixTranslator {
 		}else{
 			return false;
 		}
-//		
-//		
-//		//The very longest side is the crucial one
-//		//If that side renders closer to origo than the second longest, then the side is visible
-//		Vector2D[] corners2D=new Vector2D[4];
-//		for (int i = 0; i < corners2D.length; i++) {
-//			corners2D[i]=translate2D(corners[i]);
-//		}
-//		//Will contain the longest 2D edge and its endpoints
-//		Vector2D[] longest=new Vector2D[]{Vector2D.subtract(corners2D[1], corners2D[0]),corners2D[0],corners2D[1]};
-//		//Will contain the second longest edge and its endpoints
-//		Vector2D[] secondLongest=new Vector2D[3];
-//		//temp will temporarily contain the edges of the side
-//		Vector2D temp;
-//		for (int i = 1; i < corners2D.length; i++) {//Finding the two longest sides...
-//			temp=Vector2D.subtract(corners2D[i], corners2D[(i+1)%4]);
-//			if (temp.length()>longest[0].length()) {//if this edge is longer than the current longest
-//				secondLongest=Arrays.copyOf(longest, longest.length);
-//				longest[0]=temp;
-//				longest[1]=corners2D[i];
-//				longest[2]=corners2D[(i+1)%4];
-//			}else if(secondLongest[0]==null||temp.length()>secondLongest[0].length()){//If we've found a new second longest 2D vector
-//				secondLongest[0]=temp;
-//				secondLongest[1]=corners2D[i];
-//				secondLongest[2]=corners2D[(i+1)%4];
-//			}
-//		}
-//		//If the longest and the shortest sides have any corner in common,
-//		//that means the side is either the side pointing directly forwards or directly backwards
-//		//which in turn means that we must use the sides normal to find out which 
-//		//alternative is right
-//		for (int i = 1; i < secondLongest.length; i++) {//comparing corners
-//			if (secondLongest[i].equals(longest[1])||secondLongest[i].equals(longest[2])) {
-//				if (translate(normal).getX()>0) {
-//					return true;
-//				}else{
-//					return false;
-//				}
-//			}
-//		}
-//		//If this is neither the closest nor the farthest side
-//		//Then we know that if the longest side is closer to origo compared to
-//		//the second longest, then it should be visible
-//		float difference= Vector2D.add(longest[1], longest[2]).length()-Vector2D.add(secondLongest[1], secondLongest[2]).length();  
-//		if (difference<0) {
-//			return true;
-//		}else{
-//			return false;
-//		}
-
 	}
 
 }
