@@ -1,7 +1,15 @@
 package cube;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+import org.lwjgl.Sys;
+
+import objectTypes.Vector2D;
 import objectTypes.Vector3D;
+import sun.security.provider.certpath.AdjacencyList;
 import core.MatrixTranslator;
 
 
@@ -136,12 +144,12 @@ public class Cube {
 				squares.addAll(sides[i].getSquares());
 			}
 		}
-
-
 		return squares;
 	}
-
+	
+	
 	public void setRotX(float rotX) {
+		
 		this.rotX = rotX;
 	}
 	public float getRotX() {
@@ -190,7 +198,7 @@ public class Cube {
 		/**
 		 * Initializes a side in the Cube
 		 * @param sideWidth
-		 * @param normal MUST HAVE THE FORMAT (0 or 1,0 or 1,0 or 1) and have length 1
+		 * @param normal MUST HAVE THE FORMAT (0 or 1,0 or 1,0 or 1) and have length 1. i e must be an unit vector
 		 * @param upDirection MUST HAVE SAME FORMAT AS NORMAL
 		 */
 		private Side(Vector3D normal, Vector3D upDirection){

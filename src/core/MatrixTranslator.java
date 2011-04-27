@@ -2,6 +2,7 @@ package core;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import javax.swing.text.StyledEditorKit.ForegroundAction;
 
@@ -24,7 +25,7 @@ public class MatrixTranslator {
 	private static final int SCREEN_WIDTH=800;
 	private static final int SCREEN_HEIGHT=600;
 	//Where c is the cameras position and e is the viewers distance from the screen
-	Vector3D c=new Vector3D(0,0,0),e=new Vector3D(1000, 0, 0);
+	Vector3D c=new Vector3D(300,0,0),e=new Vector3D(1000, 0, 0);
 	Matrix3x3 transMat;
 	public MatrixTranslator(double angleX,double angleY,double angleZ){
 		cosAx=(float)Math.cos(angleX);
@@ -45,7 +46,7 @@ public class MatrixTranslator {
 	 * @return the new vector
 	 */
 	public Vector3D translate(Vector3D v){
-		return transMat.translateVector(Vector3D.subtract(v, c));
+		return transMat.translateVector(v);
 	}
 	/**
 	 * Translates a vector through rotations and specifications and projects it on the screen
@@ -59,7 +60,7 @@ public class MatrixTranslator {
 
 		return new Vector2D(v2D.getX()+SCREEN_WIDTH/2, v2D.getY()+SCREEN_HEIGHT/2);
 	}
-	private Vector2D translate2D(Vector3D v){
+	public Vector2D translate2D(Vector3D v){
 		Vector3D trans = translate(v);
 
 		float w = -trans.getX()/(e.getX()-300) + 1;
@@ -81,6 +82,9 @@ public class MatrixTranslator {
 		}
 		return p;
 	}
+	
+	
+	
 	/**
 	 * Determines whether a side in a cube is visible at this present time by examining 
 	 * the squares four corners
@@ -91,53 +95,63 @@ public class MatrixTranslator {
 	 * @return Whether this side is visible or not
 	 */
 	public boolean sideVisible(Vector3D[] corners,Vector3D normal){
-		//The very longest side is the crucial one
-		//If that side renders closer to origo than the second longest, then the side is visible
-		Vector2D[] corners2D=new Vector2D[4];
-		for (int i = 0; i < corners2D.length; i++) {
-			corners2D[i]=translate2D(corners[i]);
-		}
-		//Will contain the longest 2D edge and its endpoints
-		Vector2D[] longest=new Vector2D[]{Vector2D.subtract(corners2D[1], corners2D[0]),corners2D[0],corners2D[1]};
-		//Will contain the second longest edge and its endpoints
-		Vector2D[] secondLongest=new Vector2D[3];
-		//temp will temporarily contain the edges of the side
-		Vector2D temp;
-		for (int i = 1; i < corners2D.length; i++) {//Finding the two longest sides...
-			temp=Vector2D.subtract(corners2D[i], corners2D[(i+1)%4]);
-			if (temp.length()>longest[0].length()) {//if this edge is longer than the current longest
-				secondLongest=Arrays.copyOf(longest, longest.length);
-				longest[0]=temp;
-				longest[1]=corners2D[i];
-				longest[2]=corners2D[(i+1)%4];
-			}else if(secondLongest[0]==null||temp.length()>secondLongest[0].length()){//If we've found a new second longest 2D vector
-				secondLongest[0]=temp;
-				secondLongest[1]=corners2D[i];
-				secondLongest[2]=corners2D[(i+1)%4];
-			}
-		}
-		//If the longest and the shortest sides have any corner in common,
-		//that means the side is either the side pointing directly forwards or directly backwards
-		//which in turn means that we must use the sides normal to find out which 
-		//alternative is right
-		for (int i = 1; i < secondLongest.length; i++) {//comparing corners
-			if (secondLongest[i].equals(longest[1])||secondLongest[i].equals(longest[2])) {
-				if (translate(normal).getX()>0) {
-					return true;
-				}else{
-					return false;
-				}
-			}
-		}
-		//If this is neither the closest nor the farthest side
-		//Then we know that if the longest side is closer to origo compared to
-		//the second longest, then it should be visible
-		float difference= Vector2D.add(longest[1], longest[2]).length()-Vector2D.add(secondLongest[1], secondLongest[2]).length();  
-		if (difference<0) {
+		float dot1=Vector3D.dotProduct(translate(normal), translate(corners[1]));
+		float dot2=Vector3D.dotProduct(translate(normal), Vector3D.subtract(e, c));
+		//System.out.println(dot1+" and "+ dot2);
+		if (dot1<dot2) {
 			return true;
 		}else{
 			return false;
 		}
+//		
+//		
+//		//The very longest side is the crucial one
+//		//If that side renders closer to origo than the second longest, then the side is visible
+//		Vector2D[] corners2D=new Vector2D[4];
+//		for (int i = 0; i < corners2D.length; i++) {
+//			corners2D[i]=translate2D(corners[i]);
+//		}
+//		//Will contain the longest 2D edge and its endpoints
+//		Vector2D[] longest=new Vector2D[]{Vector2D.subtract(corners2D[1], corners2D[0]),corners2D[0],corners2D[1]};
+//		//Will contain the second longest edge and its endpoints
+//		Vector2D[] secondLongest=new Vector2D[3];
+//		//temp will temporarily contain the edges of the side
+//		Vector2D temp;
+//		for (int i = 1; i < corners2D.length; i++) {//Finding the two longest sides...
+//			temp=Vector2D.subtract(corners2D[i], corners2D[(i+1)%4]);
+//			if (temp.length()>longest[0].length()) {//if this edge is longer than the current longest
+//				secondLongest=Arrays.copyOf(longest, longest.length);
+//				longest[0]=temp;
+//				longest[1]=corners2D[i];
+//				longest[2]=corners2D[(i+1)%4];
+//			}else if(secondLongest[0]==null||temp.length()>secondLongest[0].length()){//If we've found a new second longest 2D vector
+//				secondLongest[0]=temp;
+//				secondLongest[1]=corners2D[i];
+//				secondLongest[2]=corners2D[(i+1)%4];
+//			}
+//		}
+//		//If the longest and the shortest sides have any corner in common,
+//		//that means the side is either the side pointing directly forwards or directly backwards
+//		//which in turn means that we must use the sides normal to find out which 
+//		//alternative is right
+//		for (int i = 1; i < secondLongest.length; i++) {//comparing corners
+//			if (secondLongest[i].equals(longest[1])||secondLongest[i].equals(longest[2])) {
+//				if (translate(normal).getX()>0) {
+//					return true;
+//				}else{
+//					return false;
+//				}
+//			}
+//		}
+//		//If this is neither the closest nor the farthest side
+//		//Then we know that if the longest side is closer to origo compared to
+//		//the second longest, then it should be visible
+//		float difference= Vector2D.add(longest[1], longest[2]).length()-Vector2D.add(secondLongest[1], secondLongest[2]).length();  
+//		if (difference<0) {
+//			return true;
+//		}else{
+//			return false;
+//		}
 
 	}
 
