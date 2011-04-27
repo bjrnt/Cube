@@ -75,7 +75,8 @@ public class Base extends BasicGame {
 		cc = new CubeController(c);
 		
 		game = new Game(c.getSquare(0, 0, 0),1);
-		gc = new GameController(game);
+		gc = new GameController(game,c);
+
 		
 		ui = new UI(input);
 		ui.loadMenuButtons();
@@ -180,7 +181,7 @@ public class Base extends BasicGame {
 			ui.loadIngameButtons();
 		}
 		
-		cc.runAnimation();
+		cc.runAnimations(delta);
 		game.update(delta);
 	}
 
