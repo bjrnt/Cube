@@ -64,8 +64,10 @@ public class Base extends BasicGame {
 		container.setVSync(true);
 		// Game game = new Game(); For when the Game class exists
 		
-		background = new Image("data/bg.jpg");
+		//background = new Image("data/bg.jpg");
 		c = new Cube(10);
+		c.setRotZ((float)Math.PI/4);
+		c.setRotY((float)Math.PI/4);
 		s = c.getSquare(0, 0, 0);
 		input = container.getInput();
 		cc = new CubeController(c);
@@ -88,7 +90,7 @@ public class Base extends BasicGame {
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
 		
-		background.draw(0,0);
+		//background.draw(0,0);
 		
 		if(menu.getActive()) {
 			ArrayList<MenuItem> menuItems = menu.getMenuItems();
@@ -123,7 +125,7 @@ public class Base extends BasicGame {
 		// A hot tip is to render the squares before the grid to have the grid
 		// lines cover the squares nicely
 		// rendering background squares
-		renderManySquares(c.getSquares(mt), g, mt);
+		//renderManySquares(c.getSquares(mt), g, mt);
 
 		// rendering arrows
 		if(ih.usingPrimaryKeySet())
