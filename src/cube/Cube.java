@@ -98,15 +98,13 @@ public class Cube {
 	 * 
 	 */
 	public ArrayList<Vector3D[]> getGrid(MatrixTranslator mt){
-		System.out.println(sides[0].getCorners()[0]);
-		System.out.println(mt.translate(sides[0].getCorners()[0]));
+
 		ArrayList<Vector3D[]> lines=new ArrayList<Vector3D[]>();
 		for (int i = 0; i < sides.length; i++) {
 			if (mt.sideVisible(sides[i].getCorners()[2],sides[i].getNormal())) {
 				lines.addAll(sides[i].getGrid());
 			}
 		}
-		System.out.println(mt.translate(sides[0].getNormal()));
 		return  lines;
 	}
 	/**

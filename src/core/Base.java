@@ -19,6 +19,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
+
 import cube.Cube;
 import cube.CubeController;
 import cube.Direction;
@@ -42,9 +44,7 @@ public class Base extends BasicGame {
 	private Game game;
 	
 	private Cube c;
-	private Square s;
 	Direction currentD = Direction.RIGHT;
-	int ticker = 0;
 	
 	private Image background;
 	
@@ -66,13 +66,15 @@ public class Base extends BasicGame {
 		background = new Image("data/bg.jpg");
 
 		c = new Cube(10);
+		c.getSquare(0, 2, 4).setEndSquare(Color.green);
+		c.getSquare(0, 6, 9).setEndSquare(Color.green);
+		c.getSquare(0, 5, 5).makeIntraversable();
 		
-		s = c.getSquare(0, 0, 0);
 		
 		input = container.getInput();
 		cc = new CubeController(c);
 		
-		game = new Game(c.getSquare(0, 0, 0));
+		game = new Game(c.getSquare(0, 0, 0),1);
 		gc = new GameController(game);
 		
 		ui = new UI(input);
@@ -103,10 +105,7 @@ public class Base extends BasicGame {
 		
 		renderCube(g);
 		renderUI();
-		System.out.println("----------------------------------");
-		System.out.println(c.getRotX());
-		System.out.println(c.getRotY());
-		System.out.println(c.getRotZ());
+
 	}
 	
 	/**
@@ -126,17 +125,7 @@ public class Base extends BasicGame {
 	 * @param g The Graphics object that should be used to render.
 	 */
 	private void renderCube(Graphics g) {
-		ticker++;
-		s.setBackColor(new Color(ticker % 255, 255 - (ticker % 255),
-				(ticker / 2) % 255));
-		if (ticker % 100 == 0) {
-			currentD = Direction.randomDirection();
-		}
-		Square temp = s.getNeighbor(currentD);
-		if (temp != null) {
-			s = temp;
-		}
-
+		
 		MatrixTranslator mt = new MatrixTranslator(c.getRotX(), c.getRotY(), c.getRotZ());
 		// A hot tip is to render the squares before the grid to have the grid
 		// lines cover the squares nicely

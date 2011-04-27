@@ -1,4 +1,5 @@
 package cube;
+import java.lang.annotation.Target;
 import java.util.EnumMap;
 import objectTypes.Vector3D;
 import org.newdawn.slick.Color;
@@ -79,6 +80,9 @@ public class Square {
 		return endSquare;
 	}
 	
+	public boolean isTraversable(){
+		return traversable;
+	}
 	/**
 	 * Sets a neighboring Square 
 	 * @param d the direction left,right,up or down to which the new neighbor is attached

@@ -19,7 +19,7 @@ public class GameController {
 	}
 	
 	public void directionKeyPressed (Direction d) {
-		g.setSquare(g.getSquare().getNeighbor(d));
+		g.movePlayer(d);
 	}
 	
 }
