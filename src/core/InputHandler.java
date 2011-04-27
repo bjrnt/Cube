@@ -59,6 +59,8 @@ public class InputHandler {
 		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_LEFT, Direction.LEFT));
 		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_RIGHT, Direction.RIGHT));
 		
+		activeKeyListeners.add(new StartTrailKeyboard(gc, Input.KEY_SPACE));
+		
 		activateListeners();
 		primaryKeySet = true;
 	}
@@ -77,6 +79,8 @@ public class InputHandler {
 		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_DOWN, Direction.DOWN));
 		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_LEFT, Direction.LEFT));
 		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_RIGHT, Direction.RIGHT));
+		
+		activeKeyListeners.add(new StartTrailKeyboard(gc, Input.KEY_SPACE));
 		
 		activateListeners();
 		primaryKeySet = false;

@@ -22,10 +22,12 @@ public class GameController {
 		this.c = c;
 	}
 	
+	public void startTrail() {
+		g.startTrail();
+	}
+	
 	public void directionKeyPressed (Direction d) {
-
 		g.movePlayer(d);
-
 	}
 	
 }
