@@ -73,7 +73,7 @@ public class Base extends BasicGame {
 		cc = new CubeController(c);
 		
 		game = new Game(c.getSquare(0, 0, 0));
-		gc = new GameController(game);
+		gc = new GameController(game, c);
 		
 		ui = new UI(input);
 		ui.loadMenuButtons();
@@ -103,10 +103,6 @@ public class Base extends BasicGame {
 		
 		renderCube(g);
 		renderUI();
-		System.out.println("----------------------------------");
-		System.out.println(c.getRotX());
-		System.out.println(c.getRotY());
-		System.out.println(c.getRotZ());
 	}
 	
 	/**
@@ -191,7 +187,7 @@ public class Base extends BasicGame {
 			ui.loadIngameButtons();
 		}
 		
-		cc.runAnimation();
+		cc.runAnimations(delta);
 		game.update(delta);
 	}
 
