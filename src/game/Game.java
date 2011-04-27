@@ -13,12 +13,13 @@ public class Game {
 	private Color selectColor=DEFAULT_COLOR;
 	private Square selectedSquare;
 	private boolean leaveTrail=false;
-	private int points=0;
-	private Color previousColor=Color.white;
+	private int points=0,maxPoints;
+	private Color previousColor=DEFAULT_BACK_COLOR;
 	
 	public Game(Square startSquare, int maxPoints) {
 		selectedSquare = startSquare;
 		selectedSquare.setBackColor(selectColor);
+		this.maxPoints=maxPoints;
 	}
 	
 	public void update(int delta) {
@@ -26,18 +27,26 @@ public class Game {
 	}
 	
 	public void setSquare(Square s) {
-		if (leaveTrail) {
-			if (s.isEndSquare()) {
-			points++;
-			}
-		}
-		else{
-			
+		if (!leaveTrail) {	
 			selectedSquare.setBackColor(previousColor);
 		}
-		
+
 		selectedSquare = s;
 		previousColor = selectedSquare.getBackColor();
+		if (leaveTrail) {
+			if (s.isEndSquare()) {//must be the right endSquare since it's the only colored square that is possible to trail on
+				s.unSetEndSquare();
+				points++;
+				System.out.println("Points: "+points);
+				if (points==maxPoints) {
+					youWin();
+				}
+				leaveTrail=false;
+				selectColor=DEFAULT_COLOR;
+			}
+
+		}
+
 		s.setBackColor(selectColor);
 	}
 	/**
@@ -46,7 +55,7 @@ public class Game {
 	 */
 	public void movePlayer(Direction d){
 		Square neighbor=selectedSquare.getNeighbor(d);
-		if (neighbor.isTraversable()&&!leaveTrail||(leaveTrail&&neighbor.getBackColor()==DEFAULT_BACK_COLOR&&(!neighbor.isEndSquare()||neighbor.getBackColor()==selectColor))) {
+		if (neighbor.isTraversable()&&!leaveTrail||(leaveTrail&&(neighbor.getBackColor()==DEFAULT_BACK_COLOR||(neighbor.isEndSquare()&&neighbor.getBackColor()==selectColor)))) {
 			setSquare(neighbor);
 		}
 	}
@@ -61,7 +70,9 @@ public class Game {
 	public void startTrail(){
 		if (selectedSquare.isEndSquare()) {
 			leaveTrail=true;
-			selectColor=selectedSquare.getBackColor();
+			selectColor=selectedSquare.getTrailColor();
+			selectedSquare.setBackColor(selectColor);
+			selectedSquare.unSetEndSquare();
 		}
 	}
 	private void youWin(){

@@ -2,6 +2,7 @@ package core;
 
 import game.Game;
 import game.GameController;
+import game.Level;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,7 @@ public class Base extends BasicGame {
 	private Game game;
 	
 	private Cube c;
+	private int currentLevel=0;
 	Direction currentD = Direction.RIGHT;
 	
 	private Image background;
@@ -65,11 +67,13 @@ public class Base extends BasicGame {
 		
 		background = new Image("data/bg.jpg");
 
-		c = new Cube(10);
-		c.getSquare(0, 2, 4).setEndSquare(Color.green);
-		c.getSquare(0, 6, 9).setEndSquare(Color.green);
-		c.getSquare(0, 5, 5).makeIntraversable();
-		
+//		c = new Cube(10);
+//		c.getSquare(0, 2, 4).setEndSquare(Color.green);
+//		c.getSquare(0, 6, 9).setEndSquare(Color.green);
+//		c.getSquare(0, 5, 5).makeIntraversable();
+//		c.getSquare(1, 3, 4).setEndSquare(Color.blue);
+//		c.getSquare(0, 7, 0).setEndSquare(Color.blue);
+		setLevel(0);
 		
 		input = container.getInput();
 		cc = new CubeController(c);
@@ -189,5 +193,16 @@ public class Base extends BasicGame {
 		AppGameContainer container = new AppGameContainer(new Base(),
 				screenWidth, screenHeight, false);
 		container.start();
+	}
+	private void setLevel(int level){
+		currentLevel=level;
+		c=Level.getLevel(currentLevel);
+	}
+	public void levelUp(){
+		currentLevel++;
+		c=Level.getLevel(currentLevel);
+	}
+	public void reset(){
+		c=Level.getLevel(currentLevel);
 	}
 }

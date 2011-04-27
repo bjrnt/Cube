@@ -4,6 +4,8 @@ import java.util.EnumMap;
 import objectTypes.Vector3D;
 import org.newdawn.slick.Color;
 
+import com.sun.org.apache.regexp.internal.recompile;
+
 /**
  * Represents a square in 3-space. Or more precise any figure with 
  * four corners in 3-space 
@@ -18,8 +20,8 @@ public class Square {
 	//On a cube or in a grid, each Square has four neighbors
 	
 	private EnumMap<Direction, Square> neighbors=new EnumMap<Direction, Square>(Direction.class);
-	private Color
-	backColor= Color.white;
+	private Color backColor= Color.white;
+	private Color trailColor=null;
 	
 	/**
 	 * 
@@ -59,6 +61,11 @@ public class Square {
 	public void setEndSquare(Color newBackColor){
 		endSquare=true;
 		setBackColor(newBackColor);
+		trailColor=newBackColor;
+	}
+	
+	public void unSetEndSquare(){
+		endSquare=false;
 	}
 	/**
 	 * Determines whether the player can move to this square
@@ -71,7 +78,9 @@ public class Square {
 		traversable=false;
 		backColor=Color.black;
 	}
-	
+	public Color getTrailColor(){
+		return trailColor;
+	}
 	/**
 	 * 
 	 * @return true if this is an endsquare, false otherwise
