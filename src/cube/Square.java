@@ -12,6 +12,8 @@ import org.newdawn.slick.Color;
  */
 public class Square {
 	private Vector3D[] corners=new Vector3D[4];
+	private boolean endSquare=false;//false until set to true
+	private boolean traversable=true;//You can move to this square if nothing else is stated
 	//On a cube or in a grid, each Square has four neighbors
 	
 	private EnumMap<Direction, Square> neighbors=new EnumMap<Direction, Square>(Direction.class);
@@ -49,6 +51,32 @@ public class Square {
 	
 	public Color getBackColor(){
 		return backColor;
+	}
+	/**
+	 * Makes this square an endsquare and assigns a special color to it
+	 */
+	public void setEndSquare(Color newBackColor){
+		endSquare=true;
+		setBackColor(newBackColor);
+	}
+	/**
+	 * Determines whether the player can move to this square
+	 * @param traversable
+	 */
+	public void setTraversable(boolean traversable){
+		this.traversable=traversable;
+	}
+	public void makeIntraversable(){
+		traversable=false;
+		backColor=Color.black;
+	}
+	
+	/**
+	 * 
+	 * @return true if this is an endsquare, false otherwise
+	 */
+	public boolean isEndSquare(){
+		return endSquare;
 	}
 	
 	/**

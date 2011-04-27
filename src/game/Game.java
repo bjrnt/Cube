@@ -25,6 +25,13 @@ public class Game {
 		selectedSquare = s;
 		previousColor = selectedSquare.getBackColor();
 	}
+	/**
+	 * Moves the player, if possible
+	 * @param d
+	 */
+	public void movePlayer(Direction d){
+		
+	}
 	
 	public Square getSquare() {
 		if(selectedSquare.getBackColor() != previousColor)

@@ -66,8 +66,7 @@ public class Base extends BasicGame {
 		background = new Image("data/bg.jpg");
 
 		c = new Cube(10);
-		c.setRotZ((float)Math.PI/4);
-		c.setRotY((float)Math.PI/4);
+		
 		s = c.getSquare(0, 0, 0);
 		
 		input = container.getInput();
@@ -104,6 +103,10 @@ public class Base extends BasicGame {
 		
 		renderCube(g);
 		renderUI();
+		System.out.println("----------------------------------");
+		System.out.println(c.getRotX());
+		System.out.println(c.getRotY());
+		System.out.println(c.getRotZ());
 	}
 	
 	/**
@@ -138,7 +141,7 @@ public class Base extends BasicGame {
 		// A hot tip is to render the squares before the grid to have the grid
 		// lines cover the squares nicely
 		// rendering background squares
-		//renderManySquares(c.getSquares(mt), g, mt);
+		renderManySquares(c.getSquares(mt), g, mt);
 
 		// rendering arrows
 		if(ih != null)
@@ -147,6 +150,7 @@ public class Base extends BasicGame {
 
 		// Rendering grid
 		drawLines(g, mt, c.getGrid(mt), Color.lightGray);
+		
 	}
 
 	private void drawLines(Graphics g, MatrixTranslator mt,

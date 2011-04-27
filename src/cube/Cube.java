@@ -98,12 +98,15 @@ public class Cube {
 	 * 
 	 */
 	public ArrayList<Vector3D[]> getGrid(MatrixTranslator mt){
+		System.out.println(sides[0].getCorners()[0]);
+		System.out.println(mt.translate(sides[0].getCorners()[0]));
 		ArrayList<Vector3D[]> lines=new ArrayList<Vector3D[]>();
 		for (int i = 0; i < sides.length; i++) {
-			if (mt.sideVisible(sides[i].getCorners(),sides[i].getNormal())) {
+			if (mt.sideVisible(sides[i].getCorners()[2],sides[i].getNormal())) {
 				lines.addAll(sides[i].getGrid());
 			}
 		}
+		System.out.println(mt.translate(sides[0].getNormal()));
 		return  lines;
 	}
 	/**
@@ -116,7 +119,7 @@ public class Cube {
 		ArrayList<Vector3D[]> arrows=new ArrayList<Vector3D[]>();
 		int l=sides.length;
 		for (int i = 0; i < l ; i++) {
-			if (mt.sideVisible(sides[i].getCorners(), sides[i].getNormal())) {
+			if (mt.sideVisible(sides[i].getCorners()[2], sides[i].getNormal())) {
 				arrows.addAll(sides[i].getArrow());
 			}
 		}
@@ -140,7 +143,7 @@ public class Cube {
 	public ArrayList<Square> getSquares(MatrixTranslator mt){
 		ArrayList<Square> squares=new ArrayList<Square>();
 		for (int i = 0; i < sides.length; i++) {
-			if (mt.sideVisible(sides[i].getCorners(), sides[i].getNormal())) {
+			if (mt.sideVisible(sides[i].getCorners()[1], sides[i].getNormal())) {
 				squares.addAll(sides[i].getSquares());
 			}
 		}
@@ -149,14 +152,16 @@ public class Cube {
 	
 	
 	public void setRotX(float rotX) {
-		
+//		System.out.println("Setting rotX");
 		this.rotX = rotX;
 	}
 	public float getRotX() {
+//		System.out.println("Setting rotY");
 		return rotX;
 	}
 
 	public void setRotY(float rotY) {
+//		System.out.println("Setting rotZ");
 		this.rotY = rotY;
 	}
 	public float getRotY() {
