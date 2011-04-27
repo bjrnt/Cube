@@ -8,7 +8,6 @@ import cube.CubeController;
  */
 public class CubeRotationKeyboard extends AbstractKeyboardListener {
 	public enum Rotation {
-		X,
 		Y,
 		Z
 	}
@@ -17,6 +16,7 @@ public class CubeRotationKeyboard extends AbstractKeyboardListener {
 	private boolean flip;
 	private Rotation r;
 	private CubeController cc;
+	private final float pi2 = (float) Math.PI/2;
 	
 	/**
 	 * Creates a new Rotation keyboard listener. It is used to send commands to the Cube controller to rotate the Cube when a key is pressed.
@@ -43,24 +43,18 @@ public class CubeRotationKeyboard extends AbstractKeyboardListener {
 		
 		if(!flip) {
 			if(r == Rotation.Y) {
-				cc.rotateY(0.015f * multiplier);
-			}
-			else if(r == Rotation.X) {
-				cc.rotateX(0.015f * multiplier);
+				cc.rotateY(pi2/10 * multiplier);
 			}
 			else {
-				cc.rotateZ(0.015f * multiplier);
+				cc.rotateZ(pi2/10 * multiplier);
 			}
 		}
 		else {
 			if(r == Rotation.Y) {
-				cc.rotateY(1.4551f * multiplier);
-			}
-			else if(r == Rotation.X) {
-				cc.rotateX(1.4551f * multiplier);
+				cc.rotateY(pi2 * multiplier);
 			}
 			else {
-				cc.rotateZ(1.4551f * multiplier);
+				cc.rotateZ(pi2 * multiplier);
 			}
 		}
 	}
@@ -70,9 +64,6 @@ public class CubeRotationKeyboard extends AbstractKeyboardListener {
 		if(!flip) {
 			if(r == Rotation.Y) {
 				cc.rotateY(0f);
-			}
-			if(r == Rotation.X) {
-				cc.rotateX(0f);
 			}
 			else {
 				cc.rotateZ(0f);

@@ -48,14 +48,11 @@ public class InputHandler {
 	 * Activates the primary key set.
 	 */
 	public void keySetPrimary() {
-		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_S, Rotation.Z, true, false));
-		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_W, Rotation.Z, false, false));
+		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_S, Rotation.Y, true, false));
+		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_W, Rotation.Y, false, false));
 		
-		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_A, Rotation.Y, true, false));
-		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_D, Rotation.Y, false, false));
-		
-		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_Q, Rotation.X, true, false));
-		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_E, Rotation.X, false, false));
+		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_A, Rotation.Z, false, false));
+		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_D, Rotation.Z, true, false));
 		
 		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_UP, Direction.UP));
 		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_DOWN, Direction.DOWN));
@@ -70,14 +67,11 @@ public class InputHandler {
 	 * Activates the secondary key set.
 	 */
 	public void keySetSecondary() {
-		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_S, Rotation.Z, true, true));
-		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_W, Rotation.Z, false, true));
+		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_S, Rotation.Y, true, true));
+		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_W, Rotation.Y, false, true));
 		
-		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_A, Rotation.Y, true, true));
-		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_D, Rotation.Y, false, true));
-		
-		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_Q, Rotation.X, true, true));
-		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_E, Rotation.X, false, true));
+		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_A, Rotation.Z, false, true));
+		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_D, Rotation.Z, true, true));
 		
 		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_UP, Direction.UP));
 		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_DOWN, Direction.DOWN));
