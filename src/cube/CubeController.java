@@ -1,12 +1,20 @@
 package cube;
 
+import animation.AbstractAnimation;
+import animation.AnimationCaller;
+import animation.CubeRotationAnimation;
+import animation.CubeRotationAnimation.Rotation;
+
 /**
  * Used to apply changes on the Cube due to pressed keys on the keyboard.
  * @author Björn Tegelund
  */
-public class CubeController {
+public class CubeController implements AnimationCaller {
 	private Cube c;
 	private float targetRotY, targetRotZ, targetRotX;
+	private final float pi2 = (float) Math.PI/2;
+	
+	private CubeRotationAnimation animX, animY, animZ;
 	
 	/**
 	 * Creates a new CubeController to be used to apply changes on the Cube due to pressed keys on the keyboard.
@@ -20,35 +28,51 @@ public class CubeController {
 	 * Applies all the current changes. This method is used to give the rotation of the Cube a smoother animation.
 	 * TODO Tidy this up
 	 */
-	public void runAnimation() {
-		if(Math.abs(targetRotY) > 0.015f || Math.abs(targetRotZ) > 0.015f || Math.abs(targetRotX) > 0.015f) {
-			if(Math.abs(targetRotY) > 0.015f) {
-				c.setRotY(c.getRotY() + (c.getRotY() - (c.getRotY() + targetRotY)) * 0.1f);
-				targetRotY /= 1.1;
-			}
-			if(Math.abs(targetRotZ) > 0.015f) {
-				c.setRotZ(c.getRotZ() + (c.getRotZ() - (c.getRotZ() + targetRotZ)) * 0.1f);
-				targetRotZ /= 1.1;
-			}
-			if(Math.abs(targetRotX) > 0.015f) {
-				c.setRotX(c.getRotX() + (c.getRotX() - (c.getRotX() + targetRotX)) * 0.1f);
-				targetRotX /= 1.1;
+	public void runAnimations(int delta) {
+		if(animX != null)
+			animX.update(delta);
+		if(animY != null)
+			animY.update(delta);
+		if(animZ != null)
+			animZ.update(delta);
+		
+		removeExcess();
+		createAnimations(delta);
+	}
+	
+	private void removeExcess() {
+		if(c.getRotX() >= pi2*4)
+			c.setRotX(c.getRotX() % pi2*4);
+		if(c.getRotY() >= pi2*4)
+			c.setRotY(c.getRotY() % pi2*4);
+		if(c.getRotZ() >= pi2*4)
+			c.setRotZ(c.getRotZ() % pi2*4);
+	}
+	
+	private void createAnimations(int delta) {
+		if(Math.abs(targetRotX) > pi2/10) {
+			if(animX == null) {
+				animX = new CubeRotationAnimation(this, c, 500, Rotation.X, targetRotX);
+				animX.begin();
 			}
 		}
-		else {
-			c.setRotY(c.getRotY() + targetRotY);
-			c.setRotZ(c.getRotZ() + targetRotZ);
-			c.setRotX(c.getRotX() + targetRotX);
-			if(Math.abs(targetRotY) != 0.015f) {
-				targetRotY = 0f;
-			}
-			if(Math.abs(targetRotX) != 0.015f) {
-				targetRotX = 0f;
-			}
-			if(Math.abs(targetRotZ) != 0.015f) {
-				targetRotZ = 0f;
+		if(Math.abs(targetRotY) > pi2/10) {
+			if(animY == null) {
+				animY = new CubeRotationAnimation(this, c, 500, Rotation.Y, targetRotY);
+				animY.begin();
 			}
 		}
+		else if(Math.abs(targetRotY) == pi2/10)
+			c.setRotY(c.getRotY() + targetRotY/2);
+		
+		if(Math.abs(targetRotZ) > pi2/10) {
+			if(animZ == null) {
+				animZ = new CubeRotationAnimation(this, c, 500, Rotation.Z, targetRotZ);
+				animZ.begin();
+			}
+		}
+		else if(Math.abs(targetRotZ) == pi2/10)
+			c.setRotZ(c.getRotZ() + targetRotZ/2);
 	}
 
 	public void rotateY (float tarY) {
@@ -59,5 +83,23 @@ public class CubeController {
 	}
 	public void rotateX (float tarX) {
 		targetRotX = tarX;
+	}
+
+	@Override
+	public void animationDone(AbstractAnimation animation) {
+		if(animation == animY) {
+			animY = null;
+			targetRotY = 0f;
+		}
+		if(animation == animZ) {
+			animZ = null;
+			targetRotZ = 0f;
+		}
+	}
+	
+	public void resetRotations() {
+		rotateX(-c.getRotX());
+		rotateY(-c.getRotY());
+		rotateZ(-c.getRotZ());
 	}
 }
