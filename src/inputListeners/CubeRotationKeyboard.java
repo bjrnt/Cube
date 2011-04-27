@@ -1,24 +1,18 @@
 package inputListeners;
 
-import org.newdawn.slick.Input;
-import org.newdawn.slick.KeyListener;
 import cube.CubeController;
 
 /**
- * This class is used to send commands to rotate the Cube to the Cube controller using keyboard input.
+ * This class is used to send commands to rotate the Cube to the Cube controller as a result of keyboard input.
  * @author Björn Tegelund
  */
-public class RotationKeyboard implements KeyListener {
-	/**
-	 * Used to control what directions of rotation are possible.
-	 */
+public class CubeRotationKeyboard extends AbstractKeyboardListener {
 	public enum Rotation {
+		X,
 		Y,
 		Z
 	}
 	
-	private int keyCode;
-	private boolean isAcceptingInput;
 	private boolean increase;
 	private boolean flip;
 	private Rotation r;
@@ -32,38 +26,16 @@ public class RotationKeyboard implements KeyListener {
 	 * @param increase Determines whether to increase or decrease the rotation.
 	 * @param flip Determines whether the Cube "flips" the sides, i.e. one button push leads to a 90 degree rotation, or if a button push leads to a much smaller one.
 	 */
-	public RotationKeyboard (CubeController cc, int keyCode, Rotation r, boolean increase, boolean flip) {
-		this.keyCode = keyCode;
+	public CubeRotationKeyboard(CubeController cc, int keyCode, Rotation r, boolean increase, boolean flip) {
+		super(keyCode);
 		this.r = r;
-		this.increase = increase;
 		this.cc = cc;
 		this.flip = flip;
-		
-		isAcceptingInput = true;
-	}
-	
-	@Override
-	public void inputEnded() {
+		this.increase = increase;
 	}
 
 	@Override
-	public void inputStarted() {
-	}
-
-	@Override
-	public boolean isAcceptingInput() {
-		return isAcceptingInput;
-	}
-
-	@Override
-	public void setInput(Input arg0) {
-	}
-
-	@Override
-	public void keyPressed(int keyI, char keyC) {
-		if(keyI != keyCode)
-			return;
-		
+	public void pressed() {
 		float multiplier = 1;
 		if(!increase) {
 			multiplier *= -1;
@@ -73,6 +45,9 @@ public class RotationKeyboard implements KeyListener {
 			if(r == Rotation.Y) {
 				cc.rotateY(0.015f * multiplier);
 			}
+			else if(r == Rotation.X) {
+				cc.rotateX(0.015f * multiplier);
+			}
 			else {
 				cc.rotateZ(0.015f * multiplier);
 			}
@@ -81,20 +56,23 @@ public class RotationKeyboard implements KeyListener {
 			if(r == Rotation.Y) {
 				cc.rotateY(1.4551f * multiplier);
 			}
+			else if(r == Rotation.X) {
+				cc.rotateX(1.4551f * multiplier);
+			}
 			else {
 				cc.rotateZ(1.4551f * multiplier);
 			}
 		}
 	}
-
+	
 	@Override
-	public void keyReleased(int keyI, char keyC) {
-		if(keyI != keyCode)
-			return;
-		
+	public void released() {
 		if(!flip) {
 			if(r == Rotation.Y) {
 				cc.rotateY(0f);
+			}
+			if(r == Rotation.X) {
+				cc.rotateX(0f);
 			}
 			else {
 				cc.rotateZ(0f);

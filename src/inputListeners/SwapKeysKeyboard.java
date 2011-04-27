@@ -1,20 +1,16 @@
 package inputListeners;
 
-import org.newdawn.slick.Input;
-import org.newdawn.slick.KeyListener;
-
 import core.InputHandler;
 import cube.CubeController;
 
 /**
- * A class used to listen for keyboard input, and then swaps the key set used in the InputHandler.
+ * Used to listen for keyboard input, and then swaps the key set used in the InputHandler.
  * @author Björn Tegelund
  */
-public class SwapKeysKeyboard implements KeyListener {
-	private int keyCode;
-	private boolean isAcceptingInput;
-	private InputHandler ih;
+public class SwapKeysKeyboard extends AbstractKeyboardListener {
+	@SuppressWarnings("unused")
 	private CubeController cc;
+	private InputHandler ih;
 	
 	/**
 	 * Creates a new SwapKeysKeyboard keyboard listener, which listens to keyboard input and then swaps the key set used in the InputHandler.
@@ -23,40 +19,21 @@ public class SwapKeysKeyboard implements KeyListener {
 	 * @param ih The InputHandler which key set will be swapped.
 	 */
 	public SwapKeysKeyboard(CubeController cc, int keyCode, InputHandler ih) {
-		this.keyCode = keyCode;
-		this.ih = ih;
+		super(keyCode);
 		this.cc = cc;
+		this.ih = ih;
+	}
+
+	@Override
+	public void pressed() {
+		ih.swapKeySet();
+		// TODO Use CubeController to make sure the Cube is at a right angle before swapping key sets.
+	}
+
+	@Override
+	public void released() {
+		// TODO Auto-generated method stub
 		
-		isAcceptingInput = true;
-	}
-	
-	@Override
-	public void inputEnded() {
-	}
-
-	@Override
-	public void inputStarted() {
-	}
-
-	@Override
-	public boolean isAcceptingInput() {
-		return isAcceptingInput;
-	}
-
-	@Override
-	public void setInput(Input arg0) {
-	}
-
-	@Override
-	public void keyPressed(int keyI, char keyC) {
-		if(keyI == keyCode) {
-			ih.swapKeySet(); 
-		}
-		// TODO Make sure the cube is at a right angle before swapping keysets.
-	}
-
-	@Override
-	public void keyReleased(int keyI, char keyC) {
 	}
 
 }
