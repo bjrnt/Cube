@@ -79,7 +79,12 @@ public class CubeController implements AnimationCaller {
 	}
 	
 	
-	public void rotateY (float tarY) {
+public void rotateY (float tarY) {
+		if(!(c.getRotZ() < 0 && c.getRotY() < 0) && Math.abs(c.getRotZ())%(4*pi2) >= 2*pi2 -1 && Math.abs(c.getRotZ())%(4*pi2) <= 2*pi2 + 1 && tarY > 0 && Math.abs(c.getRotY()) >= pi2-1 && Math.abs(c.getRotY()) <= pi2+1) {
+			targetRotZ = -c.getRotZ();
+			targetRotY = -c.getRotY();
+			return;
+		}
 		targetRotY = tarY;
 	}
 	public void rotateZ (float tarZ) {
