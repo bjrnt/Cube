@@ -80,4 +80,8 @@ public class GameController {
 			return Direction.LEFT;
 		throw new IllegalArgumentException("BUG");
 	}
+	
+	public void switchCube(Cube newCube){
+		c=newCube;
+	}
 }

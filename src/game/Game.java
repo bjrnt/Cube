@@ -11,7 +11,7 @@ import cube.Square;
 public class Game {
 	private static final Color DEFAULT_BACK_COLOR=Color.white;
 	private static final Color DEFAULT_COLOR=Color.yellow;
-	private static final int DEFAULT_LEVEL=0;
+	private static final int DEFAULT_LEVEL=2;
 	private Color selectColor=DEFAULT_COLOR;
 	private Square selectedSquare;
 	private boolean leaveTrail=false;
@@ -44,7 +44,7 @@ public class Game {
 			if (s.isEndSquare()) {//must be the right endSquare since it's the only colored square that is possible to trail on
 				s.unSetEndSquare();
 				points++;
-				System.out.println("Points: "+points);
+				//System.out.println("Points: "+points);
 				if (points==maxPoints) {
 					youWin();
 				}
@@ -88,7 +88,7 @@ public class Game {
 	}
 	private void setLevel(int level){
 		
-		System.out.println("Setting new level");
+		//System.out.println("Setting new level");
 		this.level=level%Level.numberOfLevels();
 		this.maxPoints=Level.maxpoint(this.level);
 		points=0;

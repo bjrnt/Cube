@@ -180,6 +180,7 @@ public class Base extends BasicGame {
 		if (c!=game.getCube()) {
 			c=game.getCube();
 			cc.switchCube(c);
+			gc.switchCube(c);
 		}
 		if(ui.getMenuActive()) {
 			return;
