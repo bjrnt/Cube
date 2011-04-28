@@ -26,15 +26,15 @@ public class GameController {
 		g.startTrail();
 	}
 	
-	public void directionKeyPressed (Direction d, boolean secondaryKeySet) {
-		if(c.getRotY() >= pi/3 && c.getRotY() <= 4/3 * pi && secondaryKeySet) {
+	public void directionKeyPressed (Direction d, boolean primaryKeySet) {
+		if(c.getRotY() >= pi/3 && c.getRotY() <= 4/3 * pi && !primaryKeySet) {
 			int n = Math.round(c.getRotZ()/(pi/2)) % 4;
 			System.out.println(n + " Z: " + c.getRotZ());
 			int m = directionToInt(d) + n;
 			
 			g.movePlayer(intToDirection(m));
 		}
-		else if(c.getRotY() <= -pi/3 && c.getRotY() >= -4/3 * pi && secondaryKeySet) {
+		else if(c.getRotY() <= -pi/3 && c.getRotY() >= -4/3 * pi && !primaryKeySet) {
 			int n = Math.round(c.getRotZ()/(pi/2)) % 4;
 			System.out.println(n + " Z: " + c.getRotZ());
 			int m = directionToInt(d) - n;
@@ -43,6 +43,10 @@ public class GameController {
 		}
 		else
 			g.movePlayer(d);
+	}
+	
+	public void resetLevel() {
+		// TODO Johan, lägg till resetgrejen här tack :)
 	}
 	
 	private int directionToInt(Direction d) {
@@ -74,9 +78,5 @@ public class GameController {
 		if(n == 3)
 			return Direction.LEFT;
 		throw new IllegalArgumentException("BUG");
-	}
-	
-	public void resetLevel() {
-		
 	}
 }
