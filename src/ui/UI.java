@@ -1,5 +1,6 @@
 package ui;
 
+import game.GameController;
 import inputListeners.ButtonClickMouse;
 import java.util.ArrayList;
 import org.newdawn.slick.Image;
@@ -15,8 +16,12 @@ public class UI {
 	private boolean menuActive;
 	private Input input;
 	private ButtonClickMouse mouseListener;
+	private GameController gc;
 	
 	private UIButton play;
+	private UIButton logo;
+	private UIButton help;
+	private UIButton helpText;
 	
 	private UIButton restart;
 	private UIButton levels;
@@ -25,8 +30,9 @@ public class UI {
 	 * Creates a new UI used to load and use clickable buttons in the menu and in-game UI.
 	 * @param input The Input onto which the MouseListener will be added.
 	 */
-	public UI(Input input) throws SlickException {
+	public UI(Input input, GameController gc) throws SlickException {
 		this.input = input;
+		this.gc = gc;
 		mouseListener = new ButtonClickMouse(this);
 	}
 	
@@ -37,9 +43,14 @@ public class UI {
 	public void loadMenuButtons() throws SlickException {
 		buttons = new ArrayList<UIButton>();
 		
+		logo = new UIButton(new Image("data/logo.jpg"), 240, 25);
 		play = new UIButton(new Image("data/play.jpg"), 300, 200);
+		help = new UIButton(new Image("data/help.jpg"), 300, 300);
+		helpText = new UIButton(new Image("data/helpText.png"), 100, 100);
 		
+		buttons.add(logo);
 		buttons.add(play);
+		buttons.add(help);
 		
 		menuActive = true;
 	}
@@ -88,10 +99,20 @@ public class UI {
 		if(mi == play)
 			menuActive = false;
 		else if(mi == restart) {
-			// TODO Restart current level
+			gc.resetLevel();
 		}
 		else if(mi == levels) {
 			// TODO Go to levels screen
+		}
+		else if(mi == help) {
+			buttons.add(helpText);
+			buttons.remove(help);
+			buttons.remove(play);
+		}
+		else if(mi == helpText) {
+			buttons.remove(helpText);
+			buttons.add(help);
+			buttons.add(play);
 		}
 	}
 	
