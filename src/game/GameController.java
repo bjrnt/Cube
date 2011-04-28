@@ -6,7 +6,7 @@ import cube.Direction;
 /**
  * Used to implement changes into the Game as a result of keyboard input.
  * 
- * @author Björn Tegelund
+ * @author Bjï¿½rn Tegelund
  */
 public class GameController {
 	private Game g;
@@ -27,7 +27,7 @@ public class GameController {
 	}
 	
 	public void directionKeyPressed (Direction d, boolean primaryKeySet) {
-		if(c.getRotY() >= pi/3 && c.getRotY() <= 4/3 * pi && !primaryKeySet) {
+		/*if(c.getRotY() >= pi/3 && c.getRotY() <= 4/3 * pi && !primaryKeySet) {
 			int n = Math.round(c.getRotZ()/(pi/2)) % 4;
 			System.out.println(n + " Z: " + c.getRotZ());
 			int m = directionToInt(d) + n;
@@ -40,9 +40,9 @@ public class GameController {
 			int m = directionToInt(d) - n;
 			
 			g.movePlayer(intToDirection(m));
-		}
-		else
-			g.movePlayer(d);
+		}*/
+		
+	       g.movePlayer(d);
 	}
 	
 	public void resetLevel() {
