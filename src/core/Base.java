@@ -73,12 +73,12 @@ public class Base extends BasicGame {
 //		c.getSquare(0, 5, 5).makeIntraversable();
 //		c.getSquare(1, 3, 4).setEndSquare(Color.blue);
 //		c.getSquare(0, 7, 0).setEndSquare(Color.blue);
-		setLevel(0);
-		
+		game = new Game();
+		c=game.getCube();
 		input = container.getInput();
 		cc = new CubeController(c);
 		
-		game = new Game(c.getSquare(0, 0, 0),1);
+		
 		gc = new GameController(game,c);
 
 		
@@ -177,6 +177,7 @@ public class Base extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
+		c=game.getCube();
 		if(ui.getMenuActive()) {
 			return;
 		}
@@ -194,15 +195,5 @@ public class Base extends BasicGame {
 				screenWidth, screenHeight, false);
 		container.start();
 	}
-	private void setLevel(int level){
-		currentLevel=level;
-		c=Level.getLevel(currentLevel);
-	}
-	public void levelUp(){
-		currentLevel++;
-		c=Level.getLevel(currentLevel);
-	}
-	public void reset(){
-		c=Level.getLevel(currentLevel);
-	}
+	
 }

@@ -39,8 +39,12 @@ public class Level {
 		}
 		return c;
 	}
-	
-	
+	public static int maxpoint(int level){
+		return endpoints[level].length;
+	}
+	public static int numberOfLevels(){
+		return endpoints.length;
+	}
 	
 	
 	private static class CubePoint{
