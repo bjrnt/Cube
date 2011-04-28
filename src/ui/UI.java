@@ -91,7 +91,7 @@ public class UI {
 			// TODO Restart current level
 		}
 		else if(mi == levels) {
-			// TODO Go to levels screen
+			// TODO Go to levels screenS
 		}
 	}
 	
