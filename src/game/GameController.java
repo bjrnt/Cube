@@ -46,7 +46,8 @@ public class GameController {
 	}
 	
 	public void resetLevel() {
-		// TODO Johan, lägg till resetgrejen här tack :)
+		 
+		g.reset();
 	}
 	
 	private int directionToInt(Direction d) {

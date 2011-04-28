@@ -74,7 +74,11 @@ public class CubeController implements AnimationCaller {
 		else if(Math.abs(targetRotZ) == pi2/10)
 			c.setRotZ(c.getRotZ() + targetRotZ/2);
 	}
-
+	public void switchCube(Cube newCube){
+		c=newCube ;
+	}
+	
+	
 	public void rotateY (float tarY) {
 		targetRotY = tarY;
 	}

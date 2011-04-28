@@ -177,7 +177,10 @@ public class Base extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
-		c=game.getCube();
+		if (c!=game.getCube()) {
+			c=game.getCube();
+			cc.switchCube(c);
+		}
 		if(ui.getMenuActive()) {
 			return;
 		}

@@ -8,18 +8,22 @@ import com.sun.org.apache.bcel.internal.generic.NEW;
 import cube.Cube;
 
 public class Level {
-	private static int resetLevel=0;
-	private static final int SQUARES_PER_SIDE=10; 
+	private static final int SQUARES_PER_SIDE=5; 
 	private static final Color[] colors=new Color[]{Color.green, Color.red, Color.blue, Color.orange, Color.pink,Color.magenta};
 	private static CubePoint[][][] endpoints= new CubePoint[][][]{
 			new CubePoint[][]{//Contains pairs of cube points
-					new CubePoint[]{new CubePoint(0, 2, 7),new CubePoint(0, 1, 1)}
+					new CubePoint[]{new CubePoint(0, 2, 2),new CubePoint(0, 1, 1)}
+			},
+			new CubePoint[][]{//Level 2
+					new CubePoint[]{new CubePoint(0,2,1), new CubePoint(5, 3, 3)},
+					new CubePoint[]{new CubePoint(0,1,2), new CubePoint(0, 4, 4)}
 			}
 			
 			
 	}; 
 	private static CubePoint[][] intraversables=new CubePoint[][]{
-			new CubePoint[]{new CubePoint(0, 2, 3),new CubePoint(0, 5, 7),new CubePoint(0, 1, 8),}
+			new CubePoint[]{new CubePoint(0, 2, 3),new CubePoint(0, 1, 0),new CubePoint(0, 3, 4),},
+			new CubePoint[]{}
 			
 	};
 	public static Cube getLevel(int level){

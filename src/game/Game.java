@@ -99,7 +99,7 @@ public class Game {
 		selectedSquare.setBackColor(selectColor);
 	}
 	public void levelUp(){
-		setLevel(level++);
+		setLevel(++level);
 	}
 	public void reset(){
 		setLevel(level);
