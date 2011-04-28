@@ -26,8 +26,57 @@ public class GameController {
 		g.startTrail();
 	}
 	
-	public void directionKeyPressed (Direction d) {
-		g.movePlayer(d);
+	public void directionKeyPressed (Direction d, boolean secondaryKeySet) {
+		if(c.getRotY() >= pi/3 && c.getRotY() <= 4/3 * pi && secondaryKeySet) {
+			int n = Math.round(c.getRotZ()/(pi/2)) % 4;
+			System.out.println(n + " Z: " + c.getRotZ());
+			int m = directionToInt(d) + n;
+			
+			g.movePlayer(intToDirection(m));
+		}
+		else if(c.getRotY() <= -pi/3 && c.getRotY() >= -4/3 * pi && secondaryKeySet) {
+			int n = Math.round(c.getRotZ()/(pi/2)) % 4;
+			System.out.println(n + " Z: " + c.getRotZ());
+			int m = directionToInt(d) - n;
+			
+			g.movePlayer(intToDirection(m));
+		}
+		else
+			g.movePlayer(d);
 	}
 	
+	private int directionToInt(Direction d) {
+		switch(d) {
+		case UP:
+			return 0;
+		case RIGHT:
+			return 1;
+		case DOWN:
+			return 2;
+		case LEFT:
+			return 3;
+		}
+		throw new IllegalArgumentException("BUG");
+	}
+	
+	private Direction intToDirection(int n) {
+		System.out.println("n: " + n);
+		if(n<0)
+			n+=4;
+		if(n>3)
+			n-=4;
+		if(n == 0)
+			return Direction.UP;
+		if(n == 1)
+			return Direction.RIGHT;
+		if(n == 2)
+			return Direction.DOWN;
+		if(n == 3)
+			return Direction.LEFT;
+		throw new IllegalArgumentException("BUG");
+	}
+	
+	public void resetLevel() {
+		
+	}
 }

@@ -32,7 +32,7 @@ public class InputHandler {
 		this.gc = gc;
 		this.input = input;
 		activeKeyListeners = new ArrayList<KeyListener>();
-		keySetPrimary();
+		keySetSecondary();
 		enableKeySetSwitching();
 	}
 	
@@ -54,17 +54,14 @@ public class InputHandler {
 		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_A, Rotation.Z, false, false));
 		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_D, Rotation.Z, true, false));
 		
-		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_UP, Direction.UP));
-		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_DOWN, Direction.DOWN));
-		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_LEFT, Direction.LEFT));
-		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_RIGHT, Direction.RIGHT));
-		
 		activeKeyListeners.add(new StartTrailKeyboard(gc, Input.KEY_SPACE));
+		
+		activateSquareChange();
 		
 		activateListeners();
 		primaryKeySet = true;
 	}
-		
+	
 	/**
 	 * Activates the secondary key set.
 	 */
@@ -75,15 +72,19 @@ public class InputHandler {
 		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_A, Rotation.Z, false, true));
 		activeKeyListeners.add(new CubeRotationKeyboard(cc, Input.KEY_D, Rotation.Z, true, true));
 		
-		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_UP, Direction.UP));
-		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_DOWN, Direction.DOWN));
-		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_LEFT, Direction.LEFT));
-		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_RIGHT, Direction.RIGHT));
-		
 		activeKeyListeners.add(new StartTrailKeyboard(gc, Input.KEY_SPACE));
+		
+		activateSquareChange();
 		
 		activateListeners();
 		primaryKeySet = false;
+	}
+	
+	private void activateSquareChange() {
+		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_UP, Direction.UP, primaryKeySet));
+		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_DOWN, Direction.DOWN, primaryKeySet));
+		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_LEFT, Direction.LEFT, primaryKeySet));
+		activeKeyListeners.add(new SquareChangeKeyboard(gc, Input.KEY_RIGHT, Direction.RIGHT, primaryKeySet));
 	}
 	
 	/**
