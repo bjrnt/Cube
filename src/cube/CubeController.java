@@ -80,7 +80,7 @@ public class CubeController implements AnimationCaller {
 	
 	
 	public void rotateY (float tarY) {
-		if(c.getRotY() >= pi2 - 1 && c.getRotY() <= pi2 + 1 && tarY > 0) {
+		/*if(c.getRotY() >= pi2 - 1 && c.getRotY() <= pi2 + 1 && tarY > 0) {
 			animX = new CubeRotationAnimation(this,c,250,Rotation.Z, 2*pi2);
 			targetRotY = -(c.getRotY());
 			return;
@@ -89,7 +89,7 @@ public class CubeController implements AnimationCaller {
 			animX = new CubeRotationAnimation(this,c,250,Rotation.Z, 2*pi2);
 			targetRotY = -(c.getRotY());
 			return;
-		}
+		}*/
 			
 		//if(!(c.getRotZ() < 0 && c.getRotY() < 0) && Math.abs(c.getRotZ())%(4*pi2) >= 2*pi2 -1 && Math.abs(c.getRotZ())%(4*pi2) <= 2*pi2 + 1 && tarY > 0 && Math.abs(c.getRotY()) >= pi2-1 && Math.abs(c.getRotY()) <= pi2+1) {
 		//	animX = new CubeRotationAnimation(this, c, 2, Rotation.Z, )
