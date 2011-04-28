@@ -32,7 +32,7 @@ public class InputHandler {
 		this.gc = gc;
 		this.input = input;
 		activeKeyListeners = new ArrayList<KeyListener>();
-		keySetSecondary();
+		keySetPrimary();
 		enableKeySetSwitching();
 	}
 	
@@ -41,7 +41,7 @@ public class InputHandler {
 	 * TODO Enable this only after the game has begun (when there is a menu).
 	 */
 	private void enableKeySetSwitching() {
-		input.addKeyListener(new SwapKeysKeyboard(cc, Input.KEY_K, this));
+		//input.addKeyListener(new SwapKeysKeyboard(cc, Input.KEY_K, this));
 	}
 	
 	/**

@@ -48,8 +48,6 @@ public class Base extends BasicGame {
 	private int currentLevel=0;
 	Direction currentD = Direction.RIGHT;
 	
-	private Image background;
-	
 	/**
 	 * Creates a new game Base.
 	 * The String sent to the superclass will be the title of the game window.
@@ -65,7 +63,6 @@ public class Base extends BasicGame {
 	public void init(GameContainer container) throws SlickException {
 		container.setVSync(true);
 		
-		background = new Image("data/bg.jpg");
 
 //		c = new Cube(10);
 //		c.getSquare(0, 2, 4).setEndSquare(Color.green);
@@ -82,7 +79,7 @@ public class Base extends BasicGame {
 		gc = new GameController(game,c);
 
 		
-		ui = new UI(input);
+		ui = new UI(input, gc);
 		ui.loadMenuButtons();
 		ui.enableClick();
 	}
