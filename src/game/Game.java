@@ -11,7 +11,7 @@ import cube.Square;
 public class Game {
 	private static final Color DEFAULT_BACK_COLOR=Color.white;
 	private static final Color DEFAULT_COLOR=Color.yellow;
-	private static final int DEFAULT_LEVEL=2;
+	private static final int DEFAULT_LEVEL=0;
 	private Color selectColor=DEFAULT_COLOR;
 	private Square selectedSquare;
 	private boolean leaveTrail=false;
