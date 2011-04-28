@@ -14,7 +14,7 @@ public class CubeController implements AnimationCaller {
 	private float targetRotY, targetRotZ, targetRotX;
 	private final float pi2 = (float) Math.PI/2;
 	
-	private CubeRotationAnimation animX, animY, animZ;
+	private CubeRotationAnimation animX, animY, animZ, queueZ;
 	
 	/**
 	 * Creates a new CubeController to be used to apply changes on the Cube due to pressed keys on the keyboard.
@@ -79,15 +79,25 @@ public class CubeController implements AnimationCaller {
 	}
 	
 	
-public void rotateY (float tarY) {
-		if(!(c.getRotZ() < 0 && c.getRotY() < 0) && Math.abs(c.getRotZ())%(4*pi2) >= 2*pi2 -1 && Math.abs(c.getRotZ())%(4*pi2) <= 2*pi2 + 1 && tarY > 0 && Math.abs(c.getRotY()) >= pi2-1 && Math.abs(c.getRotY()) <= pi2+1) {
-			targetRotZ = -c.getRotZ();
-			targetRotY = -c.getRotY();
+	public void rotateY (float tarY) {
+		if(c.getRotY() >= pi2 - 1 && c.getRotY() <= pi2 + 1 && tarY > 0) {
+			animX = new CubeRotationAnimation(this,c,250,Rotation.Z, 2*pi2);
+			targetRotY = -(c.getRotY());
 			return;
 		}
+		if(c.getRotY() <= -pi2 + 1 && c.getRotY() >= -pi2 - 1 && tarY < 0) {
+			animX = new CubeRotationAnimation(this,c,250,Rotation.Z, 2*pi2);
+			targetRotY = -(c.getRotY());
+			return;
+		}
+			
+		//if(!(c.getRotZ() < 0 && c.getRotY() < 0) && Math.abs(c.getRotZ())%(4*pi2) >= 2*pi2 -1 && Math.abs(c.getRotZ())%(4*pi2) <= 2*pi2 + 1 && tarY > 0 && Math.abs(c.getRotY()) >= pi2-1 && Math.abs(c.getRotY()) <= pi2+1) {
+		//	animX = new CubeRotationAnimation(this, c, 2, Rotation.Z, )
+		//}
 		targetRotY = tarY;
 	}
 	public void rotateZ (float tarZ) {
+		
 		targetRotZ = tarZ;
 	}
 	public void rotateX (float tarX) {
@@ -96,6 +106,10 @@ public void rotateY (float tarY) {
 
 	@Override
 	public void animationDone(AbstractAnimation animation) {
+		if(animation == animX) {
+			animX = null;
+			targetRotX = 0f;
+		}
 		if(animation == animY) {
 			animY = null;
 			targetRotY = 0f;
