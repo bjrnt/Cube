@@ -9,10 +9,10 @@ import cube.Cube;
 
 public class Level {
 	private static final int SQUARES_PER_SIDE=5; 
-	private static final Color[] colors=new Color[]{Color.green, Color.magenta, Color.blue, Color.orange, Color.pink,Color.cyan};
+	private static final Color[] colors=new Color[]{Color.green, Color.magenta, Color.blue, Color.orange, Color.pink,Color.cyan,Color.darkGray,new Color(0,102,51),new Color(102, 0, 0),new Color(51,0,102),new Color(255,143,255)};
 	private static CubePoint[][][] endpoints= new CubePoint[][][]{
 			new CubePoint[][]{//Contains pairs of cube points
-					new CubePoint[]{new CubePoint(0, 2, 2),new CubePoint(0, 1, 1)}
+					new CubePoint[]{new CubePoint(1, 2, 2),new CubePoint(0, 1, 1)}
 			},
 			new CubePoint[][]{//Level 2
 					new CubePoint[]{new CubePoint(4,2,3), new CubePoint(5, 2, 2)},
@@ -26,12 +26,37 @@ public class Level {
 					new CubePoint[]{new CubePoint(0,2,2), new CubePoint(1, 1, 4)},
 					new CubePoint[]{new CubePoint(1,3,3), new CubePoint(3, 3, 3)},
 					new CubePoint[]{new CubePoint(2,0,3), new CubePoint(4, 1, 3)}
+			},
+			new CubePoint[][]{//Level 4
+					new CubePoint[]{new CubePoint(0, 1, 2),new CubePoint(4, 2, 4)},
+					new CubePoint[]{new CubePoint(0, 3, 0),new CubePoint(4, 4, 0)},
+					new CubePoint[]{new CubePoint(0, 4, 1),new CubePoint(2, 4, 4)},
+					new CubePoint[]{new CubePoint(0, 3, 4),new CubePoint(1, 4, 4)},
+					new CubePoint[]{new CubePoint(4, 0, 0),new CubePoint(2, 4, 3)},
+					new CubePoint[]{new CubePoint(1, 1, 1),new CubePoint(2, 3, 3)},
+					new CubePoint[]{new CubePoint(1, 0, 4),new CubePoint(3, 3, 3)},
+					new CubePoint[]{new CubePoint(1, 2, 4),new CubePoint(5, 0, 0)},
+					new CubePoint[]{new CubePoint(1, 3, 2),new CubePoint(3, 2, 2)},
+			},
+			new CubePoint[][]{//level 5
+					new CubePoint[]{new CubePoint(0, 4, 0),new CubePoint(1, 1, 2)},
+					new CubePoint[]{new CubePoint(0, 2, 2),new CubePoint(4, 4, 4)},
+					new CubePoint[]{new CubePoint(1, 0, 0),new CubePoint(1, 4, 4)},
+					new CubePoint[]{new CubePoint(1, 3, 0),new CubePoint(2, 3, 0)},
+					new CubePoint[]{new CubePoint(1, 4, 3),new CubePoint(3, 1, 2)},
+					new CubePoint[]{new CubePoint(1, 4, 1),new CubePoint(5, 1, 0)},
+					new CubePoint[]{new CubePoint(2, 3, 3),new CubePoint(3, 0, 3)},
+					new CubePoint[]{new CubePoint(5, 0, 0),new CubePoint(5, 4, 2)}
+					
 			}
+			
 			
 			
 	}; 
 	private static CubePoint[][] intraversables=new CubePoint[][]{
-			new CubePoint[]{new CubePoint(0, 2, 3),new CubePoint(0, 1, 0),new CubePoint(0, 3, 4),},
+			new CubePoint[]{
+					new CubePoint(0, 2, 3),new CubePoint(0, 1, 0),new CubePoint(0, 3, 4)
+			},
 			new CubePoint[]{//Level 2
 				new CubePoint(0, 0, 1),new CubePoint(0, 0, 2),new CubePoint(0, 0, 3),new CubePoint(0, 0, 4),new CubePoint(0, 1, 0),new CubePoint(0, 1, 4),new CubePoint(0, 1, 1),new CubePoint(0, 2, 2),new CubePoint(0, 3, 4),new CubePoint(0, 4, 0),new CubePoint(0, 4, 1),new CubePoint(0, 4, 2),new CubePoint(0, 4, 3),
 				new CubePoint(1, 0, 2),new CubePoint(1, 2, 2),new CubePoint(1, 3, 2),new CubePoint(1, 4, 2),
@@ -47,7 +72,24 @@ public class Level {
 				new CubePoint(3, 0, 1),new CubePoint(3, 1, 1),new CubePoint(3, 2, 4),new CubePoint(3, 3, 2),new CubePoint(3, 3, 4),new CubePoint(3, 4, 2),
 				new CubePoint(4, 2, 2),new CubePoint(4, 3, 2),new CubePoint(4, 4, 4),
 				new CubePoint(5, 0, 4),new CubePoint(5, 1, 0),new CubePoint(5, 1, 4),new CubePoint(5, 2, 4),new CubePoint(5, 3, 1),new CubePoint(5, 3, 4),new CubePoint(5, 4, 1),new CubePoint(5, 4, 4)
+			},
+			new CubePoint[]{//Level 4
+				new CubePoint(0, 0, 3),new CubePoint(0, 4, 0),new CubePoint(0, 4, 4),
+				new CubePoint(1, 1, 2),new CubePoint(1, 4, 2),new CubePoint(1, 4, 3),
+				new CubePoint(2, 2, 1),new CubePoint(2, 3, 0),new CubePoint(2, 3, 2),
+				new CubePoint(3, 0, 1),new CubePoint(3, 0, 3),new CubePoint(3, 0, 4),new CubePoint(3, 3, 1),new CubePoint(3, 4, 1),
+				new CubePoint(4, 0, 1),new CubePoint(4, 1, 3),new CubePoint(4, 3, 2),new CubePoint(4, 3, 3),new CubePoint(4, 3, 4),
+				new CubePoint(5, 0, 4),new CubePoint(5, 3, 4)
+			},
+			new CubePoint[]{//level 5
+				new CubePoint(0, 0, 3),new CubePoint(0, 1, 2),new CubePoint(0, 2, 1),new CubePoint(0, 3, 0),new CubePoint(0, 4, 3),
+				new CubePoint(1, 0, 2),new CubePoint(1, 1, 1),new CubePoint(1, 2, 0),
+				new CubePoint(2, 2, 0),new CubePoint(2, 4, 3),
+				new CubePoint(3, 0, 4),new CubePoint(3, 2, 0),new CubePoint(3, 3, 3),new CubePoint(3, 4, 3),
+				new CubePoint(4, 0, 4),new CubePoint(4, 1, 1),new CubePoint(4, 2, 0),
+				new CubePoint(5, 2, 0),new CubePoint(5, 2, 3),new CubePoint(5, 3, 2),new CubePoint(5, 3, 4)
 			}
+			
 			
 	};
 	public static Cube getLevel(int level){

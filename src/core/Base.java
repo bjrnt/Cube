@@ -6,6 +6,7 @@ import game.Level;
 
 import java.util.ArrayList;
 
+import sun.tools.jar.Main;
 import ui.UI;
 import ui.UIButton;
 import objectTypes.Vector2D;
@@ -47,6 +48,7 @@ public class Base extends BasicGame {
 	private Cube c;
 	private int currentLevel=0;
 	Direction currentD = Direction.RIGHT;
+	
 	
 	/**
 	 * Creates a new game Base.

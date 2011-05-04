@@ -44,7 +44,7 @@ public class Game {
 			if (s.isEndSquare()) {//must be the right endSquare since it's the only colored square that is possible to trail on
 				s.unSetEndSquare();
 				points++;
-				//System.out.println("Points: "+points);
+				System.out.println("Points: "+points+"/"+maxPoints);
 				if (points==maxPoints) {
 					youWin();
 				}
