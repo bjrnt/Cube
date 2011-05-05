@@ -97,6 +97,7 @@ public class Game {
 		selectColor=DEFAULT_COLOR;
 		previousColor=DEFAULT_BACK_COLOR;
 		selectedSquare.setBackColor(selectColor);
+		leaveTrail=false;
 	}
 	public void levelUp(){
 		setLevel(++level);
